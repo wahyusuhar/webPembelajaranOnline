@@ -424,3 +424,17 @@ form.sign-in-form {
     font-size: 1.5rem;
   }
 }
+
+/* Menipiskan warna teks pada input form */
+.input-field input {
+  color: #555; /* Warna teks lebih soft */
+  font-weight: 400; /* Tidak terlalu tebal */
+  font-size: 18px; /* Ukuran font lebih kecil */
+  padding: 10px 12px; /* Padding agar lebih nyaman */
+}
+
+/* Placeholder warna lebih soft */
+.input-field input::placeholder {
+  color: #888; /* Abu-abu lebih terang */
+  font-weight: 300; /* Tipis */
+}
