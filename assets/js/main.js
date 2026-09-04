@@ -419,29 +419,20 @@ function selectAnswer() {
 
   if (isCorrect) {
     showPopup("correct");
-    document.getElementById("next-btn").disabled = false;
   } else {
     showPopup("wrong");
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const nextBtn = document.getElementById("next-btn");
-  if (nextBtn) {
-    nextBtn.addEventListener("click", () => {
-      currentQuestionIndex++;
-      if (currentQuestionIndex < questions.length) {
-        loadQuestion();
-        nextBtn.disabled = true;
-      } else {
-        showPopup("finished");
-        nextBtn.disabled = true;
-      }
-    });
+function goToNextQuestion() {
+  closePopup();
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    loadQuestion();
   } else {
-    console.error("Element with ID 'next-btn' not found.");
+    showPopup("finished");
   }
-});
+}
 
 
 function showPopup(type) {
