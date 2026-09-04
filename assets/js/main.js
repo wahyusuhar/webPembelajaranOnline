@@ -438,9 +438,18 @@ function goToNextQuestion() {
 
 
 let quizAudioCtx;
+let quizCompressor;
 function getQuizAudioCtx() {
   if (!quizAudioCtx) {
     quizAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    // Compressor sebagai limiter supaya volume bisa dinaikkan tanpa pecah/distorsi
+    quizCompressor = quizAudioCtx.createDynamicsCompressor();
+    quizCompressor.threshold.setValueAtTime(-12, quizAudioCtx.currentTime);
+    quizCompressor.knee.setValueAtTime(20, quizAudioCtx.currentTime);
+    quizCompressor.ratio.setValueAtTime(8, quizAudioCtx.currentTime);
+    quizCompressor.attack.setValueAtTime(0.002, quizAudioCtx.currentTime);
+    quizCompressor.release.setValueAtTime(0.15, quizAudioCtx.currentTime);
+    quizCompressor.connect(quizAudioCtx.destination);
   }
   if (quizAudioCtx.state === "suspended") {
     quizAudioCtx.resume();
@@ -457,20 +466,20 @@ function playTone(freq, startTime, duration, type, gainValue) {
   gain.gain.setValueAtTime(gainValue, ctx.currentTime + startTime);
   gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + startTime + duration);
   osc.connect(gain);
-  gain.connect(ctx.destination);
+  gain.connect(quizCompressor);
   osc.start(ctx.currentTime + startTime);
   osc.stop(ctx.currentTime + startTime + duration);
 }
 
 function playCorrectSound() {
-  playTone(523.25, 0, 0.15, "sine", 0.2);
-  playTone(659.25, 0.15, 0.2, "sine", 0.2);
-  playTone(783.99, 0.3, 0.28, "sine", 0.2);
+  playTone(523.25, 0, 0.15, "sine", 0.7);
+  playTone(659.25, 0.15, 0.2, "sine", 0.7);
+  playTone(783.99, 0.3, 0.28, "sine", 0.7);
 }
 
 function playWrongSound() {
-  playTone(220, 0, 0.2, "sawtooth", 0.15);
-  playTone(174.61, 0.15, 0.3, "sawtooth", 0.15);
+  playTone(220, 0, 0.2, "sawtooth", 0.55);
+  playTone(174.61, 0.15, 0.3, "sawtooth", 0.55);
 }
 
 function showPopup(type) {
