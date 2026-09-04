@@ -383,8 +383,11 @@ const questions = [
 ];
 
 let currentQuestionIndex = 0;
+let correctCount = 0;
+let currentQuestionSolved = false;
 
 function loadQuestion() {
+  currentQuestionSolved = false;
   const quizDiv = document.getElementById("quiz");
   const question = questions[currentQuestionIndex];
   quizDiv.innerHTML = `
@@ -420,6 +423,10 @@ function selectAnswer() {
   const isCorrect = selectedIndex === questions[currentQuestionIndex].correct;
 
   if (isCorrect) {
+    if (!currentQuestionSolved) {
+      correctCount++;
+      currentQuestionSolved = true;
+    }
     showPopup("correct");
   } else {
     showPopup("wrong");
@@ -432,8 +439,15 @@ function goToNextQuestion() {
   if (currentQuestionIndex < questions.length) {
     loadQuestion();
   } else {
+    updateFinishedRewards();
     showPopup("finished");
   }
+}
+
+function updateFinishedRewards() {
+  document.getElementById("reward-points").textContent = correctCount * 10;
+  document.getElementById("reward-correct").textContent = correctCount;
+  document.getElementById("reward-total").textContent = questions.length;
 }
 
 
@@ -482,6 +496,14 @@ function playWrongSound() {
   playTone(174.61, 0.15, 0.3, "sawtooth", 0.55);
 }
 
+function playFinishedSound() {
+  playTone(523.25, 0, 0.15, "sine", 0.65);
+  playTone(659.25, 0.12, 0.15, "sine", 0.65);
+  playTone(783.99, 0.24, 0.15, "sine", 0.65);
+  playTone(1046.5, 0.36, 0.4, "sine", 0.7);
+  playTone(1318.51, 0.4, 0.45, "triangle", 0.35);
+}
+
 function showPopup(type) {
   const overlay = document.getElementById("overlay");
   const correctPopup = document.getElementById("popup-correct");
@@ -502,7 +524,7 @@ function showPopup(type) {
     playWrongSound();
   } else if (type === "finished") {
     finishedPopup.style.display = "block";
-    playCorrectSound();
+    playFinishedSound();
   }
 }
 

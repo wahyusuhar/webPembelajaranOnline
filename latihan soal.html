@@ -116,8 +116,32 @@
     <button class="btn btn-light" onclick="closePopup()">OK</button>
   </div>
   <div class="popup finished" id="popup-finished">
-    <p style="color: white;">Latihan Soal selesai! Terima kasih sudah mengikuti.🎉🎉</p>
-    <button class="btn btn-dark" onclick="closePopup()">Tutup</button>
+    <div class="finished-burst"></div>
+    <h2 class="finished-title">Selamat!</h2>
+    <div class="finished-ribbon">
+      <span class="ribbon-star" style="animation-delay:.2s">★</span>
+      <span class="ribbon-star" style="animation-delay:.45s">★</span>
+      <span class="ribbon-star" style="animation-delay:.7s">★</span>
+    </div>
+    <p class="finished-subtitle">Perolehan Kamu:</p>
+    <div class="finished-rewards">
+      <div class="reward-item">
+        <span class="reward-icon">🪙</span>
+        <span class="reward-value" id="reward-points">0</span>
+        <span class="reward-caption">Poin</span>
+      </div>
+      <div class="reward-item">
+        <span class="reward-icon">💎</span>
+        <span class="reward-value" id="reward-correct">0</span>
+        <span class="reward-caption">Benar</span>
+      </div>
+      <div class="reward-item">
+        <span class="reward-icon">❤️</span>
+        <span class="reward-value" id="reward-total">0</span>
+        <span class="reward-caption">Soal</span>
+      </div>
+    </div>
+    <button class="finished-ok-btn" onclick="closePopup()">OK</button>
   </div>
 
  
