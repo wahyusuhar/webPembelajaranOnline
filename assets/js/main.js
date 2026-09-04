@@ -124,7 +124,8 @@
       duration: 600,
       easing: 'ease-in-out',
       once: true,
-      mirror: false
+      mirror: false,
+      disable: window.innerWidth < 992
     });
   }
   window.addEventListener('load', aosInit);
