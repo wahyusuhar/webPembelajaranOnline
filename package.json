@@ -1,0 +1,24 @@
+{
+  "name": "web-pembelajaran-online",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Web Pembelajaran Online packaged for Android and iOS with Capacitor",
+  "scripts": {
+    "web:build": "node scripts/prepare-web.mjs",
+    "cap:sync": "npm run web:build && cap sync",
+    "cap:copy": "npm run web:build && cap copy",
+    "android:open": "cap open android",
+    "android:build": "npm run web:build && cap sync && powershell -ExecutionPolicy Bypass -File scripts/build-android.ps1",
+    "android:devices": "powershell -ExecutionPolicy Bypass -File scripts/adb-android.ps1 devices",
+    "android:install": "powershell -ExecutionPolicy Bypass -File scripts/adb-android.ps1 install",
+    "ios:open": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/ios": "^7.4.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3"
+  }
+}

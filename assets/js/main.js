@@ -59,13 +59,38 @@
   });
 
   /**
+   * Logout
+   */
+  const logoutBtn = document.querySelector('#logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      const confirmed = window.confirm('Yakin ingin keluar dari akun Anda?');
+      if (!confirmed) return;
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('currentUser');
+      window.location.href = 'index.html';
+    });
+  }
+
+  /**
    * Preloader
    */
   const preloader = document.querySelector('#preloader');
   if (preloader) {
+    const preloaderMinDisplay = 2200;
+    const preloaderStart = performance.now();
+    const removePreloader = () => preloader.remove();
     window.addEventListener('load', () => {
-      preloader.remove();
+      const remaining = Math.max(0, preloaderMinDisplay - (performance.now() - preloaderStart));
+      setTimeout(() => {
+        preloader.classList.add('preloader-hide');
+        preloader.addEventListener('transitionend', removePreloader, { once: true });
+        // Fallback jika transitionend tidak terpicu (mis. halaman tanpa CSS fade)
+        setTimeout(removePreloader, 700);
+      }, remaining);
     });
+    // Fallback jika event 'load' tidak pernah terpicu (mis. resource eksternal gagal/lambat)
+    setTimeout(removePreloader, 8000);
   }
 
   /**
@@ -78,13 +103,15 @@
       window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
     }
   }
-  scrollTop.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+  if (scrollTop) {
+    scrollTop.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
-  });
+  }
 
   window.addEventListener('load', toggleScrollTop);
   document.addEventListener('scroll', toggleScrollTop);
@@ -398,16 +425,24 @@ function selectAnswer() {
   }
 }
 
-document.getElementById("next-btn").addEventListener("click", () => {
-  currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
-    loadQuestion();
-    document.getElementById("next-btn").disabled = true;
+document.addEventListener("DOMContentLoaded", () => {
+  const nextBtn = document.getElementById("next-btn");
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+        nextBtn.disabled = true;
+      } else {
+        showPopup("finished");
+        nextBtn.disabled = true;
+      }
+    });
   } else {
-    showPopup("finished");
-    document.getElementById("next-btn").disabled = true;
+    console.error("Element with ID 'next-btn' not found.");
   }
 });
+
 
 function showPopup(type) {
   const overlay = document.getElementById("overlay");

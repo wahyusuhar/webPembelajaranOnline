@@ -1,0 +1,9 @@
+{
+  "appId": "com.wahyusuhar.webpembelajaran",
+  "appName": "Web Pembelajaran Online",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": true
+  }
+}
