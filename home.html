@@ -213,8 +213,8 @@
       }
     }
 
-    /* Penyesuaian HP Layar Pendek (< 700px) */
-    @media (max-height: 700px) {
+    /* Penyesuaian HP Layar Pendek (< 700px, lebar juga sempit) */
+    @media (max-width: 991px) and (max-height: 700px) {
       #hero {
         padding: 50px 0 20px 0;
       }
@@ -232,6 +232,28 @@
 
       .hero .hero-waves {
         height: 30px;
+      }
+    }
+
+    /* Penyesuaian Laptop/Desktop dengan tinggi layar terbatas (bukan HP) */
+    @media (min-width: 992px) and (max-height: 700px) {
+      #hero {
+        padding: 50px 0 20px 0;
+      }
+
+      #hero .hero-img img {
+        max-height: 38vh;
+        max-height: 38dvh;
+      }
+
+      #hero h1 {
+        font-size: clamp(30px, 3.5vw, 40px);
+        line-height: 1.25;
+        margin-bottom: 16px;
+      }
+
+      .hero .hero-waves {
+        height: 40px;
       }
     }
 
