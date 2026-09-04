@@ -387,6 +387,7 @@ function loadQuestion() {
   const quizDiv = document.getElementById("quiz");
   const question = questions[currentQuestionIndex];
   quizDiv.innerHTML = `
+    <p class="question-number mb-2">Soal ${currentQuestionIndex + 1} dari ${questions.length}</p>
     <h5 class="question-title mb-3">${question.materi}</h5>
     <p class="question-text mb-4">${question.question}</p>
     <div>

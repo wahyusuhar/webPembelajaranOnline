@@ -1889,6 +1889,17 @@ text-shadow: 5px 5px #558ABB;
   display: none;
 }
 
+  /* Nomor urut soal */
+  .question-number {
+    display: inline-block;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 4px 14px;
+    border-radius: 50px;
+  }
+
   /* Gaya untuk judul (materi) */
   .question-title {
     color: #fabd07; /* Hijau terang */
