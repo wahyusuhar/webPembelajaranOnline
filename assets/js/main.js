@@ -435,6 +435,42 @@ function goToNextQuestion() {
 }
 
 
+let quizAudioCtx;
+function getQuizAudioCtx() {
+  if (!quizAudioCtx) {
+    quizAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (quizAudioCtx.state === "suspended") {
+    quizAudioCtx.resume();
+  }
+  return quizAudioCtx;
+}
+
+function playTone(freq, startTime, duration, type, gainValue) {
+  const ctx = getQuizAudioCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = type;
+  osc.frequency.value = freq;
+  gain.gain.setValueAtTime(gainValue, ctx.currentTime + startTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + startTime + duration);
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start(ctx.currentTime + startTime);
+  osc.stop(ctx.currentTime + startTime + duration);
+}
+
+function playCorrectSound() {
+  playTone(523.25, 0, 0.15, "sine", 0.2);
+  playTone(659.25, 0.15, 0.2, "sine", 0.2);
+  playTone(783.99, 0.3, 0.28, "sine", 0.2);
+}
+
+function playWrongSound() {
+  playTone(220, 0, 0.2, "sawtooth", 0.15);
+  playTone(174.61, 0.15, 0.3, "sawtooth", 0.15);
+}
+
 function showPopup(type) {
   const overlay = document.getElementById("overlay");
   const correctPopup = document.getElementById("popup-correct");
@@ -449,10 +485,13 @@ function showPopup(type) {
 
   if (type === "correct") {
     correctPopup.style.display = "block";
+    playCorrectSound();
   } else if (type === "wrong") {
     wrongPopup.style.display = "block";
+    playWrongSound();
   } else if (type === "finished") {
     finishedPopup.style.display = "block";
+    playCorrectSound();
   }
 }
 
