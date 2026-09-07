@@ -1,415 +1,490 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.replace("index.html");
+      }
+    </script>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Online Class</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
 
-<head>
-  <meta charset="utf-8">
-  <script>
-    if (localStorage.getItem('isLoggedIn') !== 'true') {
-      window.location.replace('index.html');
-    }
-  </script>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Online Class</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+    <!-- Favicons -->
+    <link href="assets/img/laptop.png" rel="icon" />
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
-  <!-- Favicons -->
-  <link href="assets/img/laptop.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-    rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link
+      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link
+      href="assets/vendor/glightbox/css/glightbox.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet" />
 
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
+    <style>
+      /* Kunci layar tanpa scroll di mobile maupun desktop */
+      html,
+      body {
+        height: 100%;
+        height: 100dvh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden !important;
+        width: 100%;
+      }
 
-  <style>
-    /* Kunci layar tanpa scroll di mobile maupun desktop */
-    html,
-    body {
-      height: 100%;
-      height: 100dvh;
-      margin: 0;
-      padding: 0;
-      overflow: hidden !important;
-      width: 100%;
-    }
+      body.index-page {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        height: 100dvh;
+        width: 100%;
+        overflow: hidden !important;
+        background-color: #13a7f1;
+      }
 
-    body.index-page {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      height: 100dvh;
-      width: 100%;
-      overflow: hidden !important;
-      background-color: #13a7f1;
-    }
+      /* Pastikan semua konten AOS langsung terlihat */
+      [data-aos] {
+        opacity: 1 !important;
+        transform: none !important;
+        visibility: visible !important;
+      }
 
-    /* Pastikan semua konten AOS langsung terlihat */
-    [data-aos] {
-      opacity: 1 !important;
-      transform: none !important;
-      visibility: visible !important;
-    }
-
-    .header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 997;
-      padding: 15px 0;
-      background: transparent;
-    }
-
-    .main {
-      flex: 1 1 auto;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      position: relative;
-    }
-
-    #hero {
-      width: 100%;
-      height: 100%;
-      height: 100dvh;
-      min-height: 100%;
-      max-height: 100dvh;
-      padding: 70px 0 30px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      position: relative;
-      box-sizing: border-box;
-      margin: 0;
-    }
-
-    #hero .hero-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 1;
-    }
-
-    #hero:before {
-      content: "";
-      background: color-mix(in srgb, var(--background-color), transparent 10%);
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-    }
-
-    #hero .container {
-      position: relative;
-      z-index: 5 !important;
-      padding-top: 10px;
-      padding-bottom: 20px;
-    }
-
-    #hero .hero-img img {
-      max-height: 48vh;
-      max-height: 48dvh;
-      width: auto;
-      object-fit: contain;
-      margin: 0 auto 20px auto;
-      display: block;
-    }
-
-    #hero h1 {
-      color: #ffffff;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-
-    #hero h1 span {
-      color: orange;
-      text-shadow: 3px 3px #558ABB;
-    }
-
-    /* Penyesuaian Tablet & Mobile */
-    @media (max-width: 991px) {
       .header {
-        padding: 10px 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 997;
+        padding: 15px 0;
+        background: transparent;
       }
 
-      .header .logo img {
-        max-height: 40px;
-      }
-
-      .header .logo h1 {
-        font-size: 20px;
+      .main {
+        flex: 1 1 auto;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
       }
 
       #hero {
-        padding: 60px 0 25px 0;
+        width: 100%;
+        height: 100%;
+        height: 100dvh;
+        min-height: 100%;
+        max-height: 100dvh;
+        padding: 70px 0 30px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+        box-sizing: border-box;
+        margin: 0;
       }
 
-      #hero .hero-img {
-        text-align: center;
+      #hero .hero-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+      }
+
+      #hero:before {
+        content: "";
+        background: color-mix(
+          in srgb,
+          var(--background-color),
+          transparent 10%
+        );
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+      }
+
+      #hero .container {
+        position: relative;
+        z-index: 5 !important;
+        padding-top: 10px;
+        padding-bottom: 20px;
+      }
+
+      #hero .hero-img img {
+        max-height: 48vh;
+        max-height: 48dvh;
+        width: auto;
+        object-fit: contain;
+        margin: 0 auto 20px auto;
+        display: block;
+      }
+
+      #hero h1 {
+        color: #ffffff;
+        font-weight: 700;
         margin-bottom: 20px;
       }
 
-      #hero .hero-img img {
-        max-height: 33vh;
-        max-height: 33dvh;
+      #hero h1 span {
+        color: orange;
+        text-shadow: 3px 3px #558abb;
       }
 
-      #hero h1 {
-        font-size: clamp(20px, 5vw, 28px);
-        line-height: 1.25;
-        margin-bottom: 28px;
-        text-align: center;
+      /* Penyesuaian Tablet & Mobile */
+      @media (max-width: 991px) {
+        .header {
+          padding: 10px 0;
+        }
+
+        .header .logo img {
+          max-height: 40px;
+        }
+
+        .header .logo h1 {
+          font-size: 20px;
+        }
+
+        #hero {
+          padding: 60px 0 25px 0;
+        }
+
+        #hero .hero-img {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+
+        #hero .hero-img img {
+          max-height: 33vh;
+          max-height: 33dvh;
+        }
+
+        #hero h1 {
+          font-size: clamp(20px, 5vw, 28px);
+          line-height: 1.25;
+          margin-bottom: 28px;
+          text-align: center;
+        }
+
+        /* Container tombol: selalu horizontal (sejajar) */
+        #hero .col-lg-6 > .d-flex {
+          display: flex !important;
+          flex-direction: row !important;
+          flex-wrap: nowrap !important;
+          justify-content: center !important;
+          align-items: center !important;
+          gap: 10px;
+        }
+
+        #hero .btn-get-started {
+          font-size: 12px;
+          padding: 8px 14px;
+          width: auto !important;
+          left: 0 !important;
+          margin: 0 !important;
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+
+        #hero .btn-watch-video {
+          font-size: 11px;
+          padding: 4px 8px;
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+
+        #hero .btn-watch-video i {
+          font-size: 20px;
+        }
+
+        #hero .btn-watch-video span {
+          font-size: 11px;
+        }
+
+        .hero .hero-waves {
+          height: 40px;
+        }
       }
 
-      /* Container tombol: selalu horizontal (sejajar) */
-      #hero .col-lg-6 > .d-flex {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        justify-content: center !important;
-        align-items: center !important;
-        gap: 10px;
+      /* Penyesuaian HP Layar Pendek (< 700px, lebar juga sempit) */
+      @media (max-width: 991px) and (max-height: 700px) {
+        #hero {
+          padding: 50px 0 20px 0;
+        }
+
+        #hero .hero-img img {
+          max-height: 27vh;
+          max-height: 27dvh;
+        }
+
+        #hero h1 {
+          font-size: 18px;
+          line-height: 1.2;
+          margin-bottom: 10px;
+        }
+
+        .hero .hero-waves {
+          height: 30px;
+        }
       }
 
-      #hero .btn-get-started {
-        font-size: 12px;
-        padding: 8px 14px;
-        width: auto !important;
-        left: 0 !important;
-        margin: 0 !important;
-        white-space: nowrap;
-        flex-shrink: 0;
+      /* Penyesuaian Laptop/Desktop dengan tinggi layar terbatas (bukan HP) */
+      @media (min-width: 992px) and (max-height: 700px) {
+        #hero {
+          padding: 50px 0 20px 0;
+        }
+
+        #hero .hero-img img {
+          max-height: 44vh;
+          max-height: 44dvh;
+        }
+
+        #hero h1 {
+          font-size: clamp(30px, 3.5vw, 40px);
+          line-height: 1.25;
+          margin-bottom: 16px;
+        }
+
+        .hero .hero-waves {
+          height: 40px;
+        }
       }
 
-      #hero .btn-watch-video {
-        font-size: 11px;
-        padding: 4px 8px;
-        white-space: nowrap;
-        flex-shrink: 0;
-      }
-
-      #hero .btn-watch-video i {
-        font-size: 20px;
-      }
-
-      #hero .btn-watch-video span {
-        font-size: 11px;
-      }
-
-      .hero .hero-waves {
-        height: 40px;
-      }
-    }
-
-    /* Penyesuaian HP Layar Pendek (< 700px, lebar juga sempit) */
-    @media (max-width: 991px) and (max-height: 700px) {
-      #hero {
-        padding: 50px 0 20px 0;
-      }
-
-      #hero .hero-img img {
-        max-height: 27vh;
-        max-height: 27dvh;
-      }
-
-      #hero h1 {
-        font-size: 18px;
-        line-height: 1.2;
-        margin-bottom: 10px;
-      }
-
-      .hero .hero-waves {
-        height: 30px;
-      }
-    }
-
-    /* Penyesuaian Laptop/Desktop dengan tinggi layar terbatas (bukan HP) */
-    @media (min-width: 992px) and (max-height: 700px) {
-      #hero {
-        padding: 50px 0 20px 0;
-      }
-
-      #hero .hero-img img {
-        max-height: 44vh;
-        max-height: 44dvh;
-      }
-
-      #hero h1 {
-        font-size: clamp(30px, 3.5vw, 40px);
-        line-height: 1.25;
-        margin-bottom: 16px;
-      }
-
-      .hero .hero-waves {
-        height: 40px;
-      }
-    }
-
-    /* Tombol Logout (pojok kanan atas) */
-    .logout-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.15);
-      border: 1.5px solid rgba(255, 255, 255, 0.6);
-      color: #ffffff;
-      font-family: var(--nav-font);
-      font-size: 14px;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: 0.3s;
-      white-space: nowrap;
-    }
-
-    .logout-btn:hover {
-      background: #ffffff;
-      color: #0c69c9;
-    }
-
-    .logout-btn i {
-      font-size: 16px;
-      line-height: 0;
-    }
-
-    @media (max-width: 480px) {
-      .logout-btn span {
-        display: none;
-      }
-
+      /* Tombol Logout (pojok kanan atas) */
       .logout-btn {
-        padding: 8px 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1.5px solid rgba(255, 255, 255, 0.6);
+        color: #ffffff;
+        font-family: var(--nav-font);
+        font-size: 14px;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: 0.3s;
+        white-space: nowrap;
+      }
+
+      .logout-btn:hover {
+        background: #ffffff;
+        color: #0c69c9;
       }
 
       .logout-btn i {
-        font-size: 18px;
+        font-size: 16px;
+        line-height: 0;
       }
-    }
-  </style>
-</head>
 
-<body class="index-page">
+      @media (max-width: 480px) {
+        .logout-btn span {
+          display: none;
+        }
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+        .logout-btn {
+          padding: 8px 10px;
+        }
 
-      <a href="home.html" class="logo d-flex align-items-center">
-        <img src="assets/img/Logo4-removebg-preview.png" alt="Logo">
-        <h1 class="sitename">Online Class</h1>
-      </a>
+        .logout-btn i {
+          font-size: 18px;
+        }
+      }
+    </style>
+  </head>
 
-      <nav id="navmenu" class="navmenu">
-      </nav>
+  <body class="index-page">
+    <header id="header" class="header d-flex align-items-center fixed-top">
+      <div
+        class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between"
+      >
+        <a href="home.html" class="logo d-flex align-items-center">
+          <img src="assets/img/Logo4-removebg-preview.png" alt="Logo" />
+          <h1 class="sitename">Online Class</h1>
+        </a>
 
-      <button id="logout-btn" class="logout-btn" type="button" title="Keluar">
-        <i class="bi bi-box-arrow-right"></i>
-        <span>Keluar</span>
-      </button>
+        <nav id="navmenu" class="navmenu"></nav>
 
-    </div>
-  </header>
+        <button id="logout-btn" class="logout-btn" type="button" title="Keluar">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Keluar</span>
+        </button>
+      </div>
+    </header>
 
-  <main class="main">
+    <main class="main">
+      <!-- Hero Section -->
+      <section id="hero" class="hero section dark-background">
+        <!-- FOTO STYLE BACKGROUND -->
+        <img src="assets/img/child3.avif" alt="Background" class="hero-bg" />
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
-      <!-- FOTO STYLE BACKGROUND -->
-      <img src="assets/img/child3.avif" alt="Background" class="hero-bg">
+        <div class="container">
+          <div class="row gy-4 justify-content-between align-items-center">
+            <div class="col-lg-5 order-lg-last hero-img text-center">
+              <img
+                src="assets/img/details-1-removebg-preview.png"
+                class="img-fluid animated"
+                alt="Hero Image"
+              />
+            </div>
 
-      <div class="container">
-        <div class="row gy-4 justify-content-between align-items-center">
-          <div class="col-lg-5 order-lg-last hero-img text-center">
-            <img src="assets/img/details-1-removebg-preview.png" class="img-fluid animated" alt="Hero Image">
-          </div>
-
-          <div class="col-lg-6 d-flex flex-column justify-content-center">
-            <h1>Belajar Menyenangkan dengan <span>Video & Materi Seru!</span></h1>
-            <div class="d-flex align-items-center">
-              <a href="utama.html" class="btn-get-started"
-                style="background-color: #f79c42; box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;">Ayo
-                Mulai Belajar</a>
-              <a href="https://youtu.be/FrwfbVEwqZg?si=-LZOD0uO1PR4NV5E" data-gallery="materi-seru"
-                data-title="Video Materi Seru"
-                class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"
-                  style="color: #f79c42;"></i><span>Tonton Video Materi Seru!</span></a>
-              <!-- Video tambahan untuk galeri (tidak tampil, ikut galeri saat lightbox dibuka) -->
-              <a href="https://youtu.be/BDy2ChJusqU" data-gallery="materi-seru" data-title="Budaya Indonesia"
-                class="glightbox" style="display:none;" aria-hidden="true"></a>
-              <a href="https://youtu.be/wAr5DARC6rc" data-gallery="materi-seru" data-title="Tata Surya"
-                class="glightbox" style="display:none;" aria-hidden="true"></a>
-              <a href="https://youtu.be/fMBc1wDoN7I" data-gallery="materi-seru" data-title="Pancasila dan Simbolnya"
-                class="glightbox" style="display:none;" aria-hidden="true"></a>
-              <a href="https://youtu.be/ThxJOMUCYds" data-gallery="materi-seru" data-title="Ekosistem"
-                class="glightbox" style="display:none;" aria-hidden="true"></a>
-              <a href="https://youtu.be/36TUWvEM6bU" data-gallery="materi-seru" data-title="Bahasa Indonesia"
-                class="glightbox" style="display:none;" aria-hidden="true"></a>
+            <div class="col-lg-6 d-flex flex-column justify-content-center">
+              <h1>
+                Belajar Menyenangkan dengan <span>Video & Materi Seru!</span>
+              </h1>
+              <div class="d-flex align-items-center">
+                <a
+                  href="utama.html"
+                  class="btn-get-started"
+                  style="
+                    background-color: #f79c42;
+                    box-shadow:
+                      rgba(240, 46, 170, 0.4) -5px 5px,
+                      rgba(240, 46, 170, 0.3) -10px 10px,
+                      rgba(240, 46, 170, 0.2) -15px 15px,
+                      rgba(240, 46, 170, 0.1) -20px 20px,
+                      rgba(240, 46, 170, 0.05) -25px 25px;
+                  "
+                  >Ayo Mulai Belajar</a
+                >
+                <a
+                  href="https://youtu.be/FrwfbVEwqZg?si=-LZOD0uO1PR4NV5E"
+                  data-gallery="materi-seru"
+                  data-title="Video Materi Seru"
+                  class="glightbox btn-watch-video d-flex align-items-center"
+                  ><i class="bi bi-play-circle" style="color: #f79c42"></i
+                  ><span>Tonton Video Materi Seru!</span></a
+                >
+                <!-- Video tambahan untuk galeri (tidak tampil, ikut galeri saat lightbox dibuka) -->
+                <a
+                  href="https://youtu.be/BDy2ChJusqU"
+                  data-gallery="materi-seru"
+                  data-title="Budaya Indonesia"
+                  class="glightbox"
+                  style="display: none"
+                  aria-hidden="true"
+                ></a>
+                <a
+                  href="https://youtu.be/wAr5DARC6rc"
+                  data-gallery="materi-seru"
+                  data-title="Tata Surya"
+                  class="glightbox"
+                  style="display: none"
+                  aria-hidden="true"
+                ></a>
+                <a
+                  href="https://youtu.be/fMBc1wDoN7I"
+                  data-gallery="materi-seru"
+                  data-title="Pancasila dan Simbolnya"
+                  class="glightbox"
+                  style="display: none"
+                  aria-hidden="true"
+                ></a>
+                <a
+                  href="https://youtu.be/ThxJOMUCYds"
+                  data-gallery="materi-seru"
+                  data-title="Ekosistem"
+                  class="glightbox"
+                  style="display: none"
+                  aria-hidden="true"
+                ></a>
+                <a
+                  href="https://youtu.be/36TUWvEM6bU"
+                  data-gallery="materi-seru"
+                  data-title="Bahasa Indonesia"
+                  class="glightbox"
+                  style="display: none"
+                  aria-hidden="true"
+                ></a>
+              </div>
             </div>
           </div>
         </div>
+
+        <svg
+          class="hero-waves"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 24 150 28 "
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <path
+              id="wave-path"
+              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+            ></path>
+          </defs>
+          <g class="wave1">
+            <use xlink:href="#wave-path" x="50" y="3"></use>
+          </g>
+          <g class="wave2">
+            <use xlink:href="#wave-path" x="50" y="0"></use>
+          </g>
+          <g class="wave3">
+            <use xlink:href="#wave-path" x="50" y="9"></use>
+          </g>
+        </svg>
+      </section>
+      <!-- /Hero Section -->
+    </main>
+
+    <!-- Scroll Top (Hidden, prevents JS null error) -->
+    <a
+      href="#"
+      id="scroll-top"
+      class="scroll-top d-flex align-items-center justify-content-center"
+      style="display: none !important"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Preloader -->
+    <div id="preloader">
+      <div class="preloader-content">
+        <img
+          src="assets/img/Logo4-removebg-preview.png"
+          alt="Logo"
+          class="preloader-logo"
+        />
+        <div class="preloader-spinner"></div>
+        <p class="preloader-text">Menyiapkan halaman belajar...</p>
       </div>
-
-      <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-        viewBox="0 24 150 28 " preserveAspectRatio="none">
-        <defs>
-          <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
-        </defs>
-        <g class="wave1">
-          <use xlink:href="#wave-path" x="50" y="3"></use>
-        </g>
-        <g class="wave2">
-          <use xlink:href="#wave-path" x="50" y="0"></use>
-        </g>
-        <g class="wave3">
-          <use xlink:href="#wave-path" x="50" y="9"></use>
-        </g>
-      </svg>
-
-    </section><!-- /Hero Section -->
-
-  </main>
-
-  <!-- Scroll Top (Hidden, prevents JS null error) -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"
-    style="display: none !important;"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader">
-    <div class="preloader-content">
-      <img src="assets/img/Logo4-removebg-preview.png" alt="Logo" class="preloader-logo">
-      <div class="preloader-spinner"></div>
-      <p class="preloader-text">Menyiapkan halaman belajar...</p>
     </div>
-  </div>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
-
-</body>
-
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+  </body>
 </html>
