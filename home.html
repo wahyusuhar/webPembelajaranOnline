@@ -7,7 +7,7 @@
         window.location.replace("index.html");
       }
     </script>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport" />
     <title>Online Class</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -79,6 +79,7 @@
         right: 0;
         z-index: 997;
         padding: 15px 0;
+        padding-top: calc(15px + env(safe-area-inset-top, 0px));
         background: transparent;
       }
 
@@ -160,6 +161,7 @@
       @media (max-width: 991px) {
         .header {
           padding: 10px 0;
+          padding-top: calc(10px + env(safe-area-inset-top, 0px));
         }
 
         .header .logo img {

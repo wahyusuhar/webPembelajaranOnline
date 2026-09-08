@@ -150,8 +150,24 @@ h6 {
   color: var(--default-color);
   background-color: var(--background-color);
   padding: 20px 0;
+  padding-top: calc(20px + env(safe-area-inset-top, 0px));
   transition: all 0.5s;
   z-index: 997;
+}
+
+@media (max-width: 575px) {
+  .header {
+    padding: 12px 0;
+    padding-top: calc(12px + env(safe-area-inset-top, 0px));
+  }
+
+  .header .logo img {
+    max-height: 40px;
+  }
+
+  .header .logo h1 {
+    font-size: 20px;
+  }
 }
 
 .header .logo {
@@ -978,11 +994,6 @@ text-shadow: 5px 5px #558ABB;
 }
 
 @media (max-width: 640px) {
-  .hero{
-    position: relative;
-    margin-top: -50px;
-  }
-
   .hero .hero-img img {
     width: 100%;
     max-width: 100%;

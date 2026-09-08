@@ -3,6 +3,10 @@
   "appName": "Web Pembelajaran Online",
   "webDir": "www",
   "bundledWebRuntime": false,
+  "server": {
+    "url": "https://www.terala.my.id",
+    "cleartext": true
+  },
   "android": {
     "allowMixedContent": true
   }
