@@ -2292,4 +2292,122 @@ text-shadow: 5px 5px #558ABB;
   }
 }
 
+/*--------------------------------------------------------------
+# Galeri Video Materi Pembelajaran (per kategori)
+--------------------------------------------------------------*/
+.video-gallery-group {
+  margin-bottom: 46px;
+}
+
+.video-gallery-group:last-child {
+  margin-bottom: 0;
+}
+
+.video-gallery-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.video-gallery-heading i {
+  font-size: 1.5rem;
+  color: #ffd54a;
+}
+
+.video-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 22px;
+}
+
+.video-card {
+  display: block;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.24);
+  color: inherit;
+}
+
+.video-card-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000000;
+}
+
+.video-card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.video-card:hover .video-card-thumb img {
+  transform: scale(1.08);
+}
+
+.video-card-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.video-card-play i {
+  font-size: 2.6rem;
+  color: #ffffff;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+  transition: transform 0.3s ease;
+}
+
+.video-card:hover .video-card-play i {
+  transform: scale(1.15);
+}
+
+.video-card-title {
+  padding: 14px 16px 16px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #040677;
+  line-height: 1.4;
+}
+
+@media (max-width: 575px) {
+  .video-gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .video-card-title {
+    font-size: 0.8rem;
+    padding: 10px 12px 12px;
+  }
+
+  .video-card-play i {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .video-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
