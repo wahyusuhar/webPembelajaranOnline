@@ -18,11 +18,22 @@ const excludedEntries = new Set([
   'package.json'
 ]);
 
+// File besar yang tidak perlu dibundel ke APK/IPA karena aplikasi memuat
+// konten langsung dari server.url (lihat capacitor.config.json) - link
+// download PDF tetap berfungsi diambil dari server saat online.
+const excludedExtensions = new Set(['.pdf']);
+
 await rm(webDirectory, { recursive: true, force: true });
 await mkdir(webDirectory, { recursive: true });
 
 for (const entry of await (await import('node:fs/promises')).readdir(projectRoot)) {
   if (!excludedEntries.has(entry)) {
-    await cp(join(projectRoot, entry), join(webDirectory, entry), { recursive: true });
+    await cp(join(projectRoot, entry), join(webDirectory, entry), {
+      recursive: true,
+      filter: (source) => {
+        const ext = source.slice(source.lastIndexOf('.')).toLowerCase();
+        return !excludedExtensions.has(ext);
+      }
+    });
   }
 }
