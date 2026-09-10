@@ -20,8 +20,8 @@ const excludedEntries = new Set([
 
 // File besar yang tidak perlu dibundel ke APK/IPA karena aplikasi memuat
 // konten langsung dari server.url (lihat capacitor.config.json) - link
-// download PDF tetap berfungsi diambil dari server saat online.
-const excludedExtensions = new Set(['.pdf']);
+// download PDF/APK tetap berfungsi diambil dari server saat online.
+const excludedExtensions = new Set(['.pdf', '.apk']);
 
 await rm(webDirectory, { recursive: true, force: true });
 await mkdir(webDirectory, { recursive: true });
