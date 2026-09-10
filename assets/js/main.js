@@ -244,168 +244,157 @@
 
 const questions = [
 
-  // SOAL BUDAYA INDONESIA
+  // SOAL KENAMPAKAN ALAM SUMATERA UTARA
   {
-    materi: "Budaya Indonesia",
-    question: "Apa nama pakaian adat dari provinsi Bali?",
-    options: ["Ulos", "Kebaya Bali", "Songket", "Beskap"],
-    correct: 1,
-  },
-  {
-    materi: "Budaya Indonesia",
-    question: "Apa alat musik tradisional yang berasal dari Jawa Barat?",
-    options: ["Gamelan", "Angklung", "Kolintang", "Sasando"],
-    correct: 1,
-  },
-  {
-    materi: "Budaya Indonesia",
-    question: "Rumah adat Honai berasal dari provinsi?",
-    options: ["Sumatera Barat", "Sulawesi Selatan", "Papua", "Bali"],
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Kenampakan alam terbesar yang menjadi ikon Provinsi Sumatera Utara adalah ....",
+    options: ["Danau Maninjau", "Danau Singkarak", "Danau Toba", "Danau Tempe"],
     correct: 2,
   },
   {
-    materi: "Budaya Indonesia",
-    question: "Tari Pendet berasal dari daerah?",
-    options: ["Bali", "Jawa Tengah", "Sumatera Utara", "Aceh"],
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Danau Toba terbentuk akibat ....",
+    options: ["gempa bumi", "letusan gunung api", "banjir", "angin kencang"],
+    correct: 1,
+  },
+  {
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Pulau yang berada di tengah Danau Toba adalah ....",
+    options: ["Pulau Nias", "Pulau Samosir", "Pulau Weh", "Pulau Banyak"],
+    correct: 1,
+  },
+  {
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Gunung berapi yang masih aktif di Sumatera Utara adalah ....",
+    options: ["Gunung Kerinci", "Gunung Leuser", "Gunung Sinabung", "Gunung Ciremai"],
+    correct: 2,
+  },
+  {
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Gunung Sibayak terletak di daerah ....",
+    options: ["Berastagi", "Medan", "Binjai", "Kisaran"],
     correct: 0,
   },
   {
-    materi: "Budaya Indonesia",
-    question: "Apa nama senjata tradisional dari Sumatera Barat?",
-    options: ["Keris", "Kujang", "Rencong", "Karih"],
-    correct: 3,
-  },
-
-  {
-    materi: "Tata Surya",
-    question: "Planet terbesar di tata surya adalah?",
-    options: ["Mars", "Jupiter", "Saturnus", "Bumi"],
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Pantai yang terkenal dengan ombak besar di Sumatera Utara terdapat di Pulau ....",
+    options: ["Samosir", "Nias", "Batam", "Belitung"],
     correct: 1,
   },
-
-  // SOAL TATA SURYA 
   {
-    materi: "Tata Surya",
-    question: "Planet terkecil di tata surya adalah?",
-    options: ["Merkurius", "Mars", "Venus", "Pluto"],
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Sungai terpanjang di Sumatera Utara adalah Sungai ....",
+    options: ["Musi", "Asahan", "Kapuas", "Mahakam"],
+    correct: 1,
+  },
+  {
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Sungai Asahan mengalir dari ....",
+    options: ["Gunung Sinabung", "Danau Toba", "Pantai Nias", "Bukit Lawang"],
+    correct: 1,
+  },
+  {
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Bukit Barisan merupakan rangkaian ....",
+    options: ["sungai", "danau", "pegunungan", "pantai"],
+    correct: 2,
+  },
+  {
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Kawasan Bukit Lawang terkenal sebagai habitat ....",
+    options: ["gajah", "harimau", "orangutan", "badak"],
+    correct: 2,
+  },
+  {
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Taman Nasional Gunung Leuser berada di wilayah ....",
+    options: ["Sumatera Utara dan Aceh", "Sumatera Utara dan Riau", "Sumatera Barat dan Riau", "Aceh dan Lampung"],
     correct: 0,
   },
   {
-    materi: "Tata Surya",
-    question: "Planet manakah yang disebut sebagai planet merah?",
-    options: ["Mars", "Saturnus", "Venus", "Jupiter"],
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Wilayah dataran tinggi di Sumatera Utara memiliki udara yang ....",
+    options: ["panas", "lembap", "sejuk", "kering"],
+    correct: 2,
+  },
+  {
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Daerah yang terkenal sebagai penghasil sayuran karena berada di dataran tinggi adalah ....",
+    options: ["Belawan", "Berastagi", "Tanjung Balai", "Sibolga"],
+    correct: 1,
+  },
+  {
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Pantai timur Sumatera Utara berbatasan dengan ....",
+    options: ["Samudra Hindia", "Laut Jawa", "Selat Malaka", "Laut Natuna"],
+    correct: 2,
+  },
+  {
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Pantai barat Sumatera Utara berbatasan dengan ....",
+    options: ["Laut Banda", "Selat Sunda", "Samudra Hindia", "Laut Flores"],
+    correct: 2,
+  },
+  {
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Kenampakan alam berupa hamparan tanah yang luas dan relatif datar disebut ....",
+    options: ["gunung", "pantai", "dataran", "lembah"],
+    correct: 2,
+  },
+  {
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Air terjun Sipiso-piso berada di sekitar ....",
+    options: ["Danau Toba", "Sungai Asahan", "Pantai Nias", "Kota Medan"],
     correct: 0,
   },
   {
-    materi: "Tata Surya",
-    question: "Benda langit yang mengelilingi planet disebut?",
-    options: ["Asteroid", "Bulan", "Kometa", "Meteorit"],
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Salah satu manfaat sungai bagi masyarakat adalah ....",
+    options: ["tempat parkir", "jalur transportasi dan irigasi", "tempat pembuangan sampah", "tempat bermain kendaraan"],
     correct: 1,
   },
   {
-    materi: "Tata Surya",
-    question: "Matahari termasuk dalam kategori bintang apa?",
-    options: ["Bintang raksasa merah", "Bintang katai putih", "Bintang utama", "Bintang katai kuning"],
-    correct: 3,
-  },
-
-// SOAL EKOSISTEM
-  {
-    materi: "Ekosistem",
-    question: "Hewan pemakan daging disebut?",
-    options: ["Herbivora", "Omnivora", "Karnivora", "Insektivora"],
-    correct: 2,
-  },
-  {
-    materi: "Ekosistem",
-    question: "Tumbuhan hijau membuat makanan sendiri melalui proses?",
-    options: ["Respirasi", "Fotosintesis", "Fermentasi", "Transpirasi"],
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Pegunungan di Sumatera Utara berfungsi sebagai daerah ....",
+    options: ["pertambangan minyak", "resapan air", "pelabuhan", "kawasan industri"],
     correct: 1,
   },
   {
-    materi: "Ekosistem",
-    question: "Di ekosistem, hewan yang memakan tumbuhan disebut?",
-    options: ["Karnivora", "Omnivora", "Herbivora", "Detritivora"],
-    correct: 2,
-  },
-  {
-    materi: "Ekosistem",
-    question: "Tempat hidup alami suatu organisme disebut?",
-    options: ["Habitat", "Ekosistem", "Komunitas", "Populasi"],
-    correct: 0,
-  },
-  {
-    materi: "Ekosistem",
-    question: "Hubungan saling menguntungkan antara dua makhluk hidup disebut?",
-    options: ["Parasitisme", "Komensalisme", "Mutualisme", "Predasi"],
-    correct: 2,
-  },
-
-// SOAL KEWARGANEGARAAN
-  {
-    materi: "Kewarganegaraan",
-    question: "Siapa yang membuat undang-undang di Indonesia?",
-    options: ["Presiden", "DPR", "Hakim", "Polisi"],
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Ombak besar di Pantai Sorake dimanfaatkan untuk ....",
+    options: ["bertani", "berselancar", "menangkap burung", "menanam padi"],
     correct: 1,
   },
-
   {
-    "materi": "Kewarganegaraan",
-    "question": "Apa fungsi dari Dewan Perwakilan Rakyat (DPR) di Indonesia?",
-    "options": ["Membuat undang-undang", "Menjaga keamanan negara", "Menegakkan keadilan", "Menyelesaikan sengketa antar negara"],
-    "correct": 0
-  },
-  {
-    "materi": "Kewarganegaraan",
-    "question": "Siapa yang menyusun Undang-Undang Dasar 1945?",
-    "options": ["DPR", "MPR", "Presiden", "Pemerintah"],
-    "correct": 1
-  },
-  {
-    "materi": "Kewarganegaraan",
-    "question": "Apa yang dimaksud dengan kewarganegaraan?",
-    "options": ["Hak untuk memilih", "Hak dan kewajiban sebagai warga negara", "Peran serta dalam pemerintahan", "Hak untuk bekerja di luar negeri"],
-    "correct": 1
-  },
-  {
-    "materi": "Kewarganegaraan",
-    "question": "Siapa yang memiliki hak untuk memilih dalam pemilu di Indonesia?",
-    "options": ["Warga negara asing", "Warga negara Indonesia yang sudah berusia 17 tahun", "Anak-anak", "Warga negara Indonesia yang bekerja di luar negeri"],
-    "correct": 1
-  },
-
-  // SOAL AGAMA
-  {
-    materi: "Agama",
-    question: "Hari besar umat Islam yang dirayakan setelah bulan Ramadhan adalah?",
-    options: ["Idul Adha", "Maulid Nabi", "Idul Fitri", "Isra Mi'raj"],
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Salah satu cara menjaga kelestarian Danau Toba adalah ....",
+    options: ["membuang sampah ke danau", "menangkap ikan dengan racun", "menjaga kebersihan lingkungan", "menebang pohon di sekitar danau"],
     correct: 2,
   },
-
   {
-    "materi": "Agama",
-    "question": "Siapakah nabi terakhir dalam agama Islam?",
-    "options": ["Nabi Ibrahim", "Nabi Musa", "Nabi Muhammad", "Nabi Isa"],
-    "correct": 2
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Hutan di Sumatera Utara memiliki fungsi utama sebagai ....",
+    options: ["tempat membangun gedung", "penghasil air dan habitat satwa", "tempat parkir kendaraan", "lokasi pembuangan limbah"],
+    correct: 1,
   },
   {
-    "materi": "Agama",
-    "question": "Apa kitab suci umat Islam?",
-    "options": ["Injil", "Torat", "Al-Qur'an", "Veda"],
-    "correct": 2
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Kota Medan berada di wilayah ....",
+    options: ["dataran tinggi", "pegunungan", "dataran rendah", "lembah"],
+    correct: 2,
   },
   {
-    "materi": "Agama",
-    "question": "Apa yang dimaksud dengan zakat?",
-    "options": ["Sedekah sukarela", "Wajib berpuasa", "Pajak yang dibayar ke negara", "Harta yang wajib diberikan untuk yang membutuhkan"],
-    "correct": 3
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Pulau Nias berada di sebelah .... Pulau Sumatra.",
+    options: ["utara", "timur", "barat", "selatan"],
+    correct: 2,
   },
   {
-    "materi": "Agama",
-    "question": "Apa tujuan utama dari puasa di bulan Ramadhan?",
-    "options": ["Menurunkan berat badan", "Mendekatkan diri kepada Tuhan", "Menjaga kebugaran tubuh", "Meningkatkan kekayaan"],
-    "correct": 1
-  }
+    materi: "Kenampakan Alam Sumatera Utara",
+    question: "Kenampakan alam yang dapat dimanfaatkan sebagai pembangkit listrik tenaga air di Sumatera Utara adalah ....",
+    options: ["Gunung Sinabung", "Sungai Asahan", "Pantai Sorake", "Pulau Nias"],
+    correct: 1,
+  },
 ];
 
 let currentQuestionIndex = 0;
