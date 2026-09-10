@@ -134,7 +134,33 @@
    * Initiate glightbox
    */
   const glightbox = GLightbox({
-    selector: '.glightbox'
+    selector: '.glightbox:not([data-gallery="materi-seru"])'
+  });
+
+  /**
+   * Materi Seru video gallery: adds a visible "Video Selanjutnya" button
+   * inside the lightbox so viewers can advance without hunting for the
+   * small default arrow (important on mobile where it sits at the screen edge).
+   */
+  const materiSeruLightbox = GLightbox({
+    selector: '.glightbox[data-gallery="materi-seru"]',
+    loop: true
+  });
+  materiSeruLightbox.on('slide_after_load', (data) => {
+    const gdescInner = data.slide && data.slide.querySelector('.gdesc-inner');
+    if (!gdescInner) return;
+    let nextBtn = gdescInner.querySelector('.materi-seru-next-btn');
+    if (!nextBtn) {
+      nextBtn = document.createElement('button');
+      nextBtn.type = 'button';
+      nextBtn.className = 'materi-seru-next-btn';
+      nextBtn.addEventListener('click', () => materiSeruLightbox.nextSlide());
+      gdescInner.appendChild(nextBtn);
+    }
+    const total = materiSeruLightbox.elements.length;
+    nextBtn.innerHTML = data.index === total - 1
+      ? 'Ulangi dari Awal <i class="bi bi-arrow-repeat"></i>'
+      : 'Video Selanjutnya <i class="bi bi-skip-forward-fill"></i>';
   });
 
   /**
