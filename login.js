@@ -302,53 +302,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // 3. LOGIN DENGAN GOOGLE (CLIENT-SIDE)
   // ===================================================
   function triggerGoogleAuth() {
-    Swal.fire({
-      title: "Masuk dengan Google",
-      html: `
-        <div style="text-align: left; padding: 5px 0;">
-          <p style="margin-bottom: 12px; color: #555; font-size: 0.95rem;">
-            Pilih opsi akun Google untuk masuk ke <b>Web Pembelajaran Online</b>:
-          </p>
-          <div id="google-quick-account" style="display: flex; align-items: center; gap: 12px; padding: 12px; border: 1.5px solid #4285F4; border-radius: 10px; cursor: pointer; margin-bottom: 10px; background: #f8fbff; transition: 0.2s;">
-            <div style="width: 40px; height: 40px; border-radius: 50%; background: #4285F4; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem;">
-              <i class="fab fa-google"></i>
-            </div>
-            <div>
-              <div style="font-weight: 600; color: #1a73e8; font-size: 1rem;">Akun Google Cepat</div>
-              <div style="font-size: 0.85rem; color: #555;">siswa.belajar@gmail.com</div>
-            </div>
-          </div>
-          <div id="google-custom-account" style="display: flex; align-items: center; gap: 12px; padding: 12px; border: 1.5px dashed #bbb; border-radius: 10px; cursor: pointer; background: #fff; transition: 0.2s;">
-            <div style="width: 40px; height: 40px; border-radius: 50%; background: #ea4335; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;">
-              <i class="fas fa-user-plus"></i>
-            </div>
-            <div>
-              <div style="font-weight: 600; color: #333; font-size: 0.95rem;">Gunakan Email Google Lain</div>
-              <div style="font-size: 0.82rem; color: #777;">Ketik nama & email Google Anda</div>
-            </div>
-          </div>
-        </div>
-      `,
-      showConfirmButton: false,
-      showCancelButton: true,
-      cancelButtonText: "Batal",
-      didOpen: () => {
-        const quickBtn = document.getElementById("google-quick-account");
-        const customBtn = document.getElementById("google-custom-account");
-
-        if (quickBtn) {
-          quickBtn.addEventListener("click", () => {
-            finishGoogleLogin("Siswa Belajar", "siswa.belajar@gmail.com");
-          });
-        }
-
-        if (customBtn) {
-          customBtn.addEventListener("click", () => {
-            promptCustomGoogleAccount();
-          });
-        }
-      }
-    });
+    // Langsung minta nama & email Google asli siswa (tanpa opsi akun cepat)
+    // supaya nama yang tersimpan adalah nama pribadi masing-masing siswa,
+    // dipakai juga sebagai nama di Sertifikat Penghargaan.
+    promptCustomGoogleAccount();
   }
 
   function promptCustomGoogleAccount() {
