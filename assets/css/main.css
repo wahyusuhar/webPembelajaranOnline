@@ -2055,8 +2055,10 @@ text-shadow: 5px 5px #558ABB;
   top: -10000px;
   left: -10000px;
   width: 1050px;
-  height: 740px;
-  background: #0b1230;
+  height: 743px;
+  background-image: url("../Template Sertifikat/template.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   font-family: "Poppins", sans-serif;
   overflow: hidden;
   pointer-events: none;
@@ -2067,136 +2069,28 @@ text-shadow: 5px 5px #558ABB;
    dan ".hero h1" yang memakai color-mix() - fungsi warna modern yang
    tidak dikenali parser html2canvas dan menyebabkan gagal render PDF. */
 
-/* Pita diagonal sudut - pakai rotate(), BUKAN clip-path, karena
-   clip-path tidak dirender dengan benar oleh html2canvas (terbukti
-   dari hasil unduhan yang tampil sebagai balok, bukan segitiga). */
-.certificate .cert-diagonal {
-  position: absolute;
-  width: 420px;
-  height: 84px;
-  background: linear-gradient(90deg, #f4d35e 0%, #c9971d 100%);
-}
-
-.certificate .cert-diagonal-tl {
-  top: 50px;
-  left: -150px;
-  transform: rotate(-45deg);
-}
-
-.certificate .cert-diagonal-br {
-  bottom: 50px;
-  right: -150px;
-  transform: rotate(-45deg);
-}
-
-.certificate .cert-frame {
-  position: absolute;
-  inset: 26px;
-  border: 3px solid #e8b923;
-  border-radius: 6px;
-  padding: 10px;
-}
-
-.certificate .cert-inner {
+.certificate .cert-content {
   position: relative;
   height: 100%;
-  background: #fffdf6;
-  border: 2px solid #e8b923;
-  border-radius: 4px;
-  text-align: center;
-  padding: 56px 80px 40px;
   box-sizing: border-box;
-}
-
-.certificate .cert-corner {
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  border-color: #c9a227;
-}
-
-.certificate .cert-corner-tr {
-  top: 22px;
-  right: 22px;
-  border-top: 2px solid;
-  border-right: 2px solid;
-}
-
-.certificate .cert-corner-tr:before {
-  content: "";
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #c9a227;
-}
-
-.certificate .cert-corner-bl {
-  bottom: 22px;
-  left: 22px;
-  border-bottom: 2px solid;
-  border-left: 2px solid;
-}
-
-.certificate .cert-corner-bl:before {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: -4px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #c9a227;
-}
-
-.certificate .cert-badge {
-  position: absolute;
-  top: 44px;
-  left: 56px;
-  width: 78px;
-  height: 78px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fff6d5, #e8b923 55%, #a97a12 100%);
-  border: 4px solid #caa23a;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-}
-
-.certificate .cert-badge:before,
-.certificate .cert-badge:after {
-  content: "";
-  position: absolute;
-  top: 68px;
-  width: 15px;
-  height: 40px;
-  background: #16225a;
-}
-
-.certificate .cert-badge:before {
-  left: 6px;
-  transform: skewX(10deg);
-}
-
-.certificate .cert-badge:after {
-  right: 6px;
-  transform: skewX(-10deg);
+  padding: 100px 110px 50px;
+  text-align: center;
 }
 
 .certificate .cert-title {
   margin: 0;
   font-family: "Playfair Display", serif;
   font-weight: 800;
-  font-size: 3.2rem;
+  font-size: 3.1rem;
   letter-spacing: 6px;
   color: #16225a;
 }
 
 .certificate .cert-subtitle {
-  margin: 0 0 18px;
+  margin: 0 0 22px;
   font-family: "Playfair Display", serif;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   letter-spacing: 6px;
   color: #16225a;
 }
@@ -2210,9 +2104,9 @@ text-shadow: 5px 5px #558ABB;
 }
 
 .certificate .cert-name {
-  margin: 0 0 14px;
+  margin: 0 0 16px;
   font-family: "Great Vibes", cursive;
-  font-size: 3.4rem;
+  font-size: 3.2rem;
   color: #16225a;
   border-bottom: 1px solid #d8cba0;
   display: inline-block;
@@ -2220,16 +2114,15 @@ text-shadow: 5px 5px #558ABB;
 }
 
 .certificate .cert-desc {
-  max-width: 640px;
-  margin: 0 auto 34px;
+  max-width: 620px;
+  margin: 0 auto 40px;
   color: #7a7a7a;
   font-size: 0.95rem;
   line-height: 1.6;
 }
 
 .certificate .cert-signature {
-  float: left;
-  margin-left: 60px;
+  display: inline-block;
   text-align: center;
 }
 
@@ -2255,8 +2148,8 @@ text-shadow: 5px 5px #558ABB;
 
 .certificate .cert-date {
   position: absolute;
-  bottom: 40px;
-  right: 80px;
+  bottom: 30px;
+  right: 60px;
   margin: 0;
   font-size: 0.8rem;
   color: #a0a0a0;
