@@ -131,7 +131,7 @@
    <div class="container">
    
     <div class="quiz-container" style="position: relative; top: -40px;">
-      <h1 class="text-center mb-4">Latihan Soal Online Kenampakan Alam Sumatera Utara</h1>
+      <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Latihan Soal Online Kenampakan Alam Sumatera Utara</h1>
       <div id="quiz">
         <!-- Soal akan dimuat dengan JS -->
       </div>
@@ -142,17 +142,9 @@
 
   <!-- Pop-Up -->
   <div class="overlay" id="overlay"></div>
-  <div class="popup correct" id="popup-correct">
-    <p>Jawaban benar! Silakan lanjut ke soal berikutnya. 😊</p>
-    <button class="btn btn-light" onclick="goToNextQuestion()">Lanjut ke Soal Berikutnya</button>
-  </div>
-  <div class="popup wrong" id="popup-wrong">
-    <p>opss 😨Jawaban salah. Silakan coba lagi!</p>
-    <button class="btn btn-light" onclick="closePopup()">OK</button>
-  </div>
   <div class="popup finished" id="popup-finished">
     <div class="finished-burst"></div>
-    <h2 class="finished-title">Selamat!</h2>
+    <h2 class="finished-title" id="finished-title">Selamat!</h2>
     <div class="finished-ribbon">
       <span class="ribbon-star" style="animation-delay:.2s">★</span>
       <span class="ribbon-star" style="animation-delay:.45s">★</span>
@@ -161,22 +153,24 @@
     <p class="finished-subtitle">Perolehan Kamu:</p>
     <div class="finished-rewards">
       <div class="reward-item">
-        <span class="reward-icon">🪙</span>
-        <span class="reward-value" id="reward-points">0</span>
-        <span class="reward-caption">Poin</span>
+        <span class="reward-icon">🏆</span>
+        <span class="reward-value" id="reward-score">0</span>
+        <span class="reward-caption">Nilai</span>
       </div>
       <div class="reward-item">
-        <span class="reward-icon">💎</span>
+        <span class="reward-icon">✅</span>
         <span class="reward-value" id="reward-correct">0</span>
         <span class="reward-caption">Benar</span>
       </div>
       <div class="reward-item">
-        <span class="reward-icon">❤️</span>
-        <span class="reward-value" id="reward-total">0</span>
-        <span class="reward-caption">Soal</span>
+        <span class="reward-icon">❌</span>
+        <span class="reward-value" id="reward-wrong">0</span>
+        <span class="reward-caption">Salah</span>
       </div>
     </div>
-    <button class="finished-ok-btn" onclick="closePopup()">OK</button>
+    <p class="finished-subtitle" id="finished-message"></p>
+    <button class="finished-ok-btn" id="finished-ok-btn" onclick="closePopup()">Selesai</button>
+    <button class="finished-ok-btn" id="finished-retry-btn" onclick="restartQuiz()" style="display:none; background-color:#e74c3c;">Ulangi Sekarang</button>
   </div>
 
  

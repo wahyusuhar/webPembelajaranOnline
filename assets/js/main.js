@@ -399,10 +399,12 @@ const questions = [
 
 let currentQuestionIndex = 0;
 let correctCount = 0;
-let currentQuestionSolved = false;
+let quizLocked = false;
+
+const PASSING_SCORE = 70;
 
 function loadQuestion() {
-  currentQuestionSolved = false;
+  quizLocked = false;
   const quizDiv = document.getElementById("quiz");
   const question = questions[currentQuestionIndex];
   quizDiv.innerHTML = `
@@ -428,41 +430,68 @@ function loadQuestion() {
 
 
 function selectAnswer() {
+  if (quizLocked) return;
+
   const selectedOption = document.querySelector("input[name='answer']:checked");
-  if (!selectedOption) {
-    showPopup("wrong");
-    return;
-  }
+  if (!selectedOption) return;
+
+  quizLocked = true;
 
   const selectedIndex = parseInt(selectedOption.value, 10);
   const isCorrect = selectedIndex === questions[currentQuestionIndex].correct;
+  if (isCorrect) correctCount++;
 
-  if (isCorrect) {
-    if (!currentQuestionSolved) {
-      correctCount++;
-      currentQuestionSolved = true;
-    }
-    showPopup("correct");
-  } else {
-    showPopup("wrong");
-  }
+  document.querySelectorAll("input[name='answer']").forEach((input) => {
+    input.disabled = true;
+  });
+
+  // Jawaban tidak ditampilkan benar/salah - langsung lanjut ke soal berikutnya
+  setTimeout(goToNextQuestion, 300);
 }
 
 function goToNextQuestion() {
-  closePopup();
   currentQuestionIndex++;
   if (currentQuestionIndex < questions.length) {
     loadQuestion();
   } else {
-    updateFinishedRewards();
-    showPopup("finished");
+    showFinalResult();
   }
 }
 
-function updateFinishedRewards() {
-  document.getElementById("reward-points").textContent = correctCount * 10;
+function showFinalResult() {
+  const total = questions.length;
+  const wrongCount = total - correctCount;
+  const score = Math.round((correctCount / total) * 100);
+  const passed = score >= PASSING_SCORE;
+
+  document.getElementById("finished-title").textContent = passed ? "Selamat, Kamu Lulus!" : "Yah, Belum Lulus";
+  document.getElementById("reward-score").textContent = score;
   document.getElementById("reward-correct").textContent = correctCount;
-  document.getElementById("reward-total").textContent = questions.length;
+  document.getElementById("reward-wrong").textContent = wrongCount;
+
+  const messageEl = document.getElementById("finished-message");
+  const okBtn = document.getElementById("finished-ok-btn");
+  const retryBtn = document.getElementById("finished-retry-btn");
+
+  if (passed) {
+    messageEl.textContent = `Nilai kamu ${score}, sudah mencapai standar kelulusan (minimal ${PASSING_SCORE}). Kerja bagus!`;
+    okBtn.style.display = "inline-block";
+    retryBtn.style.display = "none";
+  } else {
+    messageEl.textContent = `Nilai kamu ${score}, masih di bawah ${PASSING_SCORE}. Yuk, ulangi lagi supaya lebih paham!`;
+    okBtn.style.display = "none";
+    retryBtn.style.display = "inline-block";
+  }
+
+  showPopup("finished");
+  playFinishedSound();
+}
+
+function restartQuiz() {
+  currentQuestionIndex = 0;
+  correctCount = 0;
+  closePopup();
+  loadQuestion();
 }
 
 
@@ -500,17 +529,6 @@ function playTone(freq, startTime, duration, type, gainValue) {
   osc.stop(ctx.currentTime + startTime + duration);
 }
 
-function playCorrectSound() {
-  playTone(523.25, 0, 0.15, "sine", 0.7);
-  playTone(659.25, 0.15, 0.2, "sine", 0.7);
-  playTone(783.99, 0.3, 0.28, "sine", 0.7);
-}
-
-function playWrongSound() {
-  playTone(220, 0, 0.2, "sawtooth", 0.55);
-  playTone(174.61, 0.15, 0.3, "sawtooth", 0.55);
-}
-
 function playFinishedSound() {
   playTone(523.25, 0, 0.15, "sine", 0.65);
   playTone(659.25, 0.12, 0.15, "sine", 0.65);
@@ -521,32 +539,17 @@ function playFinishedSound() {
 
 function showPopup(type) {
   const overlay = document.getElementById("overlay");
-  const correctPopup = document.getElementById("popup-correct");
-  const wrongPopup = document.getElementById("popup-wrong");
   const finishedPopup = document.getElementById("popup-finished");
 
   overlay.style.display = "block";
 
-  correctPopup.style.display = "none";
-  wrongPopup.style.display = "none";
-  finishedPopup.style.display = "none";
-
-  if (type === "correct") {
-    correctPopup.style.display = "block";
-    playCorrectSound();
-  } else if (type === "wrong") {
-    wrongPopup.style.display = "block";
-    playWrongSound();
-  } else if (type === "finished") {
+  if (type === "finished") {
     finishedPopup.style.display = "block";
-    playFinishedSound();
   }
 }
 
 function closePopup() {
   document.getElementById("overlay").style.display = "none";
-  document.getElementById("popup-correct").style.display = "none";
-  document.getElementById("popup-wrong").style.display = "none";
   document.getElementById("popup-finished").style.display = "none";
 }
 
