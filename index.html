@@ -4,12 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="Terala - Web Pembelajaran Online. Belajar sejarah, budaya, dan keindahan Sumatera Utara lewat buku ajar, LKPD interaktif, kuis, dan video pembelajaran." />
-    <link rel="canonical" href="https://www.terala.my.id/" />
+    <link rel="canonical" href="https://terala.my.id/" />
     <meta property="og:title" content="Terala - Web Pembelajaran Online" />
     <meta property="og:description" content="Belajar sejarah, budaya, dan keindahan Sumatera Utara lewat buku ajar, LKPD interaktif, kuis, dan video pembelajaran." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.terala.my.id/" />
-    <meta property="og:image" content="https://www.terala.my.id/assets/img/logo_fix_1.png" />
+    <meta property="og:url" content="https://terala.my.id/" />
+    <meta property="og:image" content="https://terala.my.id/assets/img/logo_fix_1.png" />
+    <meta property="og:locale" content="id_ID" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Terala - Web Pembelajaran Online" />
+    <meta name="twitter:description" content="Belajar sejarah, budaya, dan keindahan Sumatera Utara lewat buku ajar, LKPD interaktif, kuis, dan video pembelajaran." />
+    <meta name="twitter:image" content="https://terala.my.id/assets/img/logo_fix_1.png" />
     <script
       src="https://kit.fontawesome.com/64d58efce2.js"
       crossorigin="anonymous"
@@ -18,11 +23,41 @@
     <link rel="stylesheet" href="login.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Terala - Web Pembelajaran Online | Login &amp; Daftar</title>
+    <script src="assets/js/social-links.js"></script>
+    <script>
+      (function () {
+        var sameAs = (window.TERALA_SOCIAL_LINKS || []).filter(Boolean);
+        var organization = {
+          "@context": "https://schema.org",
+          "@type": "EducationalOrganization",
+          "name": "Terala",
+          "url": "https://terala.my.id/",
+          "logo": "https://terala.my.id/assets/img/logo_fix_1.png",
+          "description": "Terala adalah platform pembelajaran online yang menyajikan materi sejarah, budaya, dan keindahan Sumatera Utara melalui buku ajar, LKPD interaktif, kuis, dan video pembelajaran."
+        };
+        if (sameAs.length > 0) organization.sameAs = sameAs;
+
+        var website = {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Terala",
+          "url": "https://terala.my.id/"
+        };
+
+        [organization, website].forEach(function (data) {
+          var tag = document.createElement("script");
+          tag.type = "application/ld+json";
+          tag.text = JSON.stringify(data);
+          document.head.appendChild(tag);
+        });
+      })();
+    </script>
   </head>
   <body>
 
+    <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Terala - Web Pembelajaran Online Sejarah dan Budaya Sumatera Utara</h1>
 
-    
+
     <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
@@ -98,8 +133,13 @@
             <img src="./assets/img/register.svg" class="image" alt="Masuk" />
         </div>
     </div>
-    
+
     </div>
+
+    <nav aria-label="Tautan Terala" style="position:relative; z-index:10; text-align:center; padding:10px 0; font-size:13px;">
+      <a href="tentang.html" style="color:inherit; text-decoration:underline; margin:0 10px;">Tentang Terala</a>
+      <a href="home.html" style="color:inherit; text-decoration:underline; margin:0 10px;">Lihat Menu Pembelajaran</a>
+    </nav>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
