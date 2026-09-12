@@ -676,5 +676,21 @@ function closePopup() {
   document.getElementById("popup-finished").style.display = "none";
 }
 
+// Alat bantu developer untuk uji cepat (isi ?dev=1 di URL untuk tombolnya,
+// atau panggil devJumpToFinished(nilai) langsung dari console kapan saja)
+function devJumpToFinished(score) {
+  score = typeof score === "number" ? score : 100;
+  const total = questions.length;
+  const correctNeeded = Math.round((score / 100) * total);
+  userAnswers = questions.map((q, i) => (i < correctNeeded ? q.correct : (q.correct + 1) % q.options.length));
+  cancelAutoAdvance();
+  showFinalResult();
+}
+
+if (new URLSearchParams(window.location.search).has("dev")) {
+  const devTools = document.getElementById("dev-tools");
+  if (devTools) devTools.style.display = "block";
+}
+
 loadQuestion();
 document.getElementById("quiz").addEventListener("change", selectAnswer);
