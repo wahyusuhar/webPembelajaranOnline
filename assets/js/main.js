@@ -642,13 +642,16 @@ function downloadCertificate() {
 }
 
 async function saveCertificateNative(base64Data, fileName) {
-  const { Filesystem, Directory } = window.Capacitor.Plugins;
-  const { Share } = window.Capacitor.Plugins;
+  const { Filesystem, Share } = window.Capacitor.Plugins;
 
+  // "CACHE" adalah nilai mentah dari enum Directory.Cache milik
+  // @capacitor/filesystem. Enum itu sendiri hanya ada lewat import ES
+  // module dari paket npm-nya, yang tidak tersedia di halaman ini
+  // (tidak pakai bundler) - jadi dikirim langsung sebagai string.
   const written = await Filesystem.writeFile({
     path: fileName,
     data: base64Data,
-    directory: Directory.Cache,
+    directory: "CACHE",
   });
 
   await Share.share({
