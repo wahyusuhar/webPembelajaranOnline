@@ -604,7 +604,31 @@ function downloadCertificate() {
     pdf.addImage(imageData, "PNG", 0, 0, canvas.width, canvas.height);
 
     const studentName = getCertificateStudentName().replace(/[^a-z0-9]+/gi, "-");
-    pdf.save(`Sertifikat-Terala-${studentName}.pdf`);
+    const fileName = `Sertifikat-Terala-${studentName}.pdf`;
+
+    const isNativeApp = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+
+    if (isNativeApp) {
+      // Browser WebView di dalam APK tidak punya download manager seperti
+      // browser biasa - pdf.save() tidak akan terjadi apa-apa. Simpan lewat
+      // Capacitor Filesystem lalu buka Share sheet Android supaya siswa
+      // bisa pilih simpan ke file/Drive/WhatsApp, dll.
+      const base64Data = pdf.output("datauristring").split(",")[1];
+      saveCertificateNative(base64Data, fileName)
+        .then(() => {
+          certBtn.disabled = false;
+          certBtn.textContent = originalLabel;
+        })
+        .catch((err) => {
+          console.error("Gagal menyimpan sertifikat (native):", err);
+          alert("Gagal menyimpan sertifikat.\n\nDetail teknis: " + (err && err.message ? err.message : String(err)));
+          certBtn.disabled = false;
+          certBtn.textContent = originalLabel;
+        });
+      return;
+    }
+
+    pdf.save(fileName);
 
     certBtn.disabled = false;
     certBtn.textContent = originalLabel;
@@ -614,6 +638,24 @@ function downloadCertificate() {
     alert("Gagal membuat sertifikat PDF.\n\nDetail teknis: " + detail);
     certBtn.disabled = false;
     certBtn.textContent = originalLabel;
+  });
+}
+
+async function saveCertificateNative(base64Data, fileName) {
+  const { Filesystem, Directory } = window.Capacitor.Plugins;
+  const { Share } = window.Capacitor.Plugins;
+
+  const written = await Filesystem.writeFile({
+    path: fileName,
+    data: base64Data,
+    directory: Directory.Cache,
+  });
+
+  await Share.share({
+    title: "Sertifikat Terala",
+    text: "Sertifikat Penghargaan dari Terala",
+    url: written.uri,
+    dialogTitle: "Simpan atau Bagikan Sertifikat",
   });
 }
 
