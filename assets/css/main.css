@@ -2067,46 +2067,26 @@ text-shadow: 5px 5px #558ABB;
    dan ".hero h1" yang memakai color-mix() - fungsi warna modern yang
    tidak dikenali parser html2canvas dan menyebabkan gagal render PDF. */
 
+/* Pita diagonal sudut - pakai rotate(), BUKAN clip-path, karena
+   clip-path tidak dirender dengan benar oleh html2canvas (terbukti
+   dari hasil unduhan yang tampil sebagai balok, bukan segitiga). */
 .certificate .cert-diagonal {
   position: absolute;
-  width: 260px;
-  height: 260px;
+  width: 420px;
+  height: 84px;
+  background: linear-gradient(90deg, #f4d35e 0%, #c9971d 100%);
 }
 
 .certificate .cert-diagonal-tl {
-  top: 0;
-  left: 0;
-  clip-path: polygon(0 0, 100% 0, 0 100%);
-  background: linear-gradient(135deg, #e8b923 0%, #a97a12 100%);
-}
-
-.certificate .cert-diagonal-tl:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 190px;
-  height: 190px;
-  clip-path: polygon(0 0, 100% 0, 0 100%);
-  background: #fdfaf0;
+  top: 50px;
+  left: -150px;
+  transform: rotate(-45deg);
 }
 
 .certificate .cert-diagonal-br {
-  bottom: 0;
-  right: 0;
-  clip-path: polygon(100% 100%, 100% 0, 0 100%);
-  background: linear-gradient(315deg, #e8b923 0%, #a97a12 100%);
-}
-
-.certificate .cert-diagonal-br:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 190px;
-  height: 190px;
-  clip-path: polygon(100% 100%, 100% 0, 0 100%);
-  background: #fdfaf0;
+  bottom: 50px;
+  right: -150px;
+  transform: rotate(-45deg);
 }
 
 .certificate .cert-frame {
@@ -2187,20 +2167,20 @@ text-shadow: 5px 5px #558ABB;
 .certificate .cert-badge:after {
   content: "";
   position: absolute;
-  top: 66px;
-  width: 18px;
-  height: 34px;
+  top: 68px;
+  width: 15px;
+  height: 40px;
   background: #16225a;
 }
 
 .certificate .cert-badge:before {
-  left: 14px;
-  transform: skewX(12deg);
+  left: 6px;
+  transform: skewX(10deg);
 }
 
 .certificate .cert-badge:after {
-  right: 14px;
-  transform: skewX(-12deg);
+  right: 6px;
+  transform: skewX(-10deg);
 }
 
 .certificate .cert-title {
@@ -2251,6 +2231,14 @@ text-shadow: 5px 5px #558ABB;
   float: left;
   margin-left: 60px;
   text-align: center;
+}
+
+.certificate .cert-sign-img {
+  display: block;
+  height: 60px;
+  max-width: 200px;
+  margin: 0 auto -10px;
+  object-fit: contain;
 }
 
 .certificate .cert-sign-line {
