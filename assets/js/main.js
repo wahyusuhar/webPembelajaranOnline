@@ -571,6 +571,12 @@ function setupCertificate() {
 function downloadCertificate() {
   const certBtn = document.getElementById("finished-cert-btn");
   const originalLabel = certBtn.textContent;
+
+  if (typeof html2canvas === "undefined" || !window.jspdf) {
+    alert("Gagal memuat komponen pembuat sertifikat. Periksa koneksi internet, atau coba nonaktifkan pemblokir skrip/ekstensi privasi (mis. Brave Shields) khusus untuk halaman ini, lalu coba lagi.");
+    return;
+  }
+
   certBtn.disabled = true;
   certBtn.textContent = "Menyiapkan sertifikat...";
 
@@ -593,6 +599,7 @@ function downloadCertificate() {
     certBtn.textContent = originalLabel;
   }).catch((err) => {
     console.error("Gagal membuat sertifikat:", err);
+    alert("Gagal membuat sertifikat PDF. Ini sering terjadi karena browser (mis. Brave dengan Shields aktif) memblokir Canvas API untuk mencegah fingerprinting. Coba nonaktifkan Shields untuk situs ini atau gunakan browser lain, lalu coba lagi.");
     certBtn.disabled = false;
     certBtn.textContent = originalLabel;
   });
