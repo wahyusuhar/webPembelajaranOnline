@@ -582,7 +582,18 @@ function downloadCertificate() {
 
   const certificate = document.getElementById("certificate");
 
-  html2canvas(certificate, { scale: 2, backgroundColor: null }).then((canvas) => {
+  let renderPromise;
+  try {
+    renderPromise = html2canvas(certificate, { scale: 2, backgroundColor: null });
+  } catch (err) {
+    console.error("Gagal memanggil html2canvas:", err);
+    alert("Gagal membuat sertifikat PDF.\n\nDetail teknis: " + (err && err.message ? err.message : String(err)));
+    certBtn.disabled = false;
+    certBtn.textContent = originalLabel;
+    return;
+  }
+
+  renderPromise.then((canvas) => {
     const imageData = canvas.toDataURL("image/png");
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({
@@ -599,7 +610,8 @@ function downloadCertificate() {
     certBtn.textContent = originalLabel;
   }).catch((err) => {
     console.error("Gagal membuat sertifikat:", err);
-    alert("Gagal membuat sertifikat PDF. Ini sering terjadi karena browser (mis. Brave dengan Shields aktif) memblokir Canvas API untuk mencegah fingerprinting. Coba nonaktifkan Shields untuk situs ini atau gunakan browser lain, lalu coba lagi.");
+    const detail = err && err.message ? err.message : String(err);
+    alert("Gagal membuat sertifikat PDF.\n\nDetail teknis: " + detail);
     certBtn.disabled = false;
     certBtn.textContent = originalLabel;
   });
