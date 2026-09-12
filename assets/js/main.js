@@ -457,16 +457,28 @@ function goToNextQuestion() {
   }
 }
 
+function getStarCount(score) {
+  if (score < 50) return 1;
+  if (score < 70) return 2;
+  if (score < 90) return 3;
+  return 4;
+}
+
 function showFinalResult() {
   const total = questions.length;
   const wrongCount = total - correctCount;
   const score = Math.round((correctCount / total) * 100);
   const passed = score >= PASSING_SCORE;
+  const starCount = getStarCount(score);
 
   document.getElementById("finished-title").textContent = passed ? "Selamat, Kamu Lulus!" : "Yah, Belum Lulus";
   document.getElementById("reward-score").textContent = score;
   document.getElementById("reward-correct").textContent = correctCount;
   document.getElementById("reward-wrong").textContent = wrongCount;
+
+  document.querySelectorAll("#finished-ribbon .ribbon-star").forEach((star, index) => {
+    star.classList.toggle("empty", index >= starCount);
+  });
 
   const messageEl = document.getElementById("finished-message");
   const okBtn = document.getElementById("finished-ok-btn");
