@@ -313,8 +313,14 @@ document.addEventListener("DOMContentLoaded", function () {
       title: "Masukkan Akun Google",
       html: `
         <div style="text-align: left; padding: 5px 0;">
-          <label style="font-size: 0.85rem; font-weight: 600; color: #444;">Nama Lengkap:</label>
-          <input id="swal-google-name" class="swal2-input" placeholder="Contoh: Budi Pratama" style="width: 90%; margin: 6px auto;" />
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #444; margin-bottom: 4px;">Nama Lengkap:</label>
+            <input id="swal-google-name" class="swal2-input" placeholder="Contoh: Budi Pratama" style="width: 90%; margin: 0 auto;" />
+          </div>
+          <div>
+            <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #444; margin-bottom: 4px;">Email Google (@gmail.com):</label>
+            <input id="swal-google-email" type="email" class="swal2-input" placeholder="contoh@gmail.com" style="width: 90%; margin: 0 auto;" />
+          </div>
         </div>
       `,
       focusConfirm: false,
@@ -324,28 +330,34 @@ document.addEventListener("DOMContentLoaded", function () {
       cancelButtonText: "Kembali",
       preConfirm: () => {
         const nameInput = document.getElementById("swal-google-name");
+        const emailInput = document.getElementById("swal-google-email");
         const name = nameInput ? nameInput.value.trim() : "";
+        const email = emailInput ? emailInput.value.trim() : "";
 
-        if (!name) {
-          Swal.showValidationMessage("Harap isi nama lengkap Anda!");
+        if (!name || !email) {
+          Swal.showValidationMessage("Harap isi nama dan email Google!");
           return false;
         }
-        return { name };
+        if (!email.includes("@")) {
+          Swal.showValidationMessage("Format email tidak valid!");
+          return false;
+        }
+        return { name, email };
       }
     }).then((result) => {
       if (result.isConfirmed && result.value) {
-        finishGoogleLogin(result.value.name);
+        finishGoogleLogin(result.value.name, result.value.email);
       }
     });
   }
 
-  function finishGoogleLogin(name) {
+  function finishGoogleLogin(name, email) {
     // Daftarkan/update user ke localStorage jika belum ada
-    let existingUser = findUserByUsernameOrEmail(name);
+    let existingUser = findUserByUsernameOrEmail(email);
     if (!existingUser) {
       existingUser = {
         username: name,
-        email: "",
+        email: email,
         password: "google_authenticated",
         authProvider: "google",
         createdAt: new Date().toISOString()
@@ -356,7 +368,7 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("currentUser", JSON.stringify({
       username: name,
-      email: "",
+      email: email,
       loginType: "google",
       loginAt: new Date().toISOString()
     }));
@@ -364,7 +376,7 @@ document.addEventListener("DOMContentLoaded", function () {
     Swal.fire({
       icon: "success",
       title: "Login Google Berhasil!",
-      html: `Selamat datang, <b>${name}</b>!`,
+      html: `Selamat datang, <b>${name}</b>!<br><span style="color: #666; font-size: 0.85rem;">(${email})</span>`,
       confirmButtonText: "Lanjutkan ke Pembelajaran",
       confirmButtonColor: "#2ecc71",
       timer: 1800,
