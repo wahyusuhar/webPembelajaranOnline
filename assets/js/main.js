@@ -409,7 +409,6 @@ function loadQuestion() {
   const question = questions[currentQuestionIndex];
   quizDiv.innerHTML = `
     <p class="question-number mb-2"><i class="bi bi-flag-fill"></i> Soal ${currentQuestionIndex + 1} dari ${questions.length}</p>
-    <h5 class="question-title mb-3">${question.materi}</h5>
     <p class="question-text mb-4">${question.question}</p>
     <div>
       ${question.options

@@ -2212,11 +2212,11 @@ text-shadow: 5px 5px #558ABB;
     }
   }
 
-  /* Gaya untuk judul (materi) */
-  .question-title {
-    color: #fabd07; /* Hijau terang */
+  /* Gaya untuk teks soal */
+  .question-text {
+    color: #fabd07;
     font-weight: bold;
-    font-size: 1.9rem; /* Perbesar sedikit */
+    font-size: 1.3rem;
   }
 
 /*--------------------------------------------------------------
