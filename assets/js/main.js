@@ -582,18 +582,15 @@ function downloadCertificate() {
 
   const certificate = document.getElementById("certificate");
 
-  let renderPromise;
-  try {
-    renderPromise = html2canvas(certificate, { scale: 2, backgroundColor: null });
-  } catch (err) {
-    console.error("Gagal memanggil html2canvas:", err);
-    alert("Gagal membuat sertifikat PDF.\n\nDetail teknis: " + (err && err.message ? err.message : String(err)));
-    certBtn.disabled = false;
-    certBtn.textContent = originalLabel;
-    return;
-  }
+  // Pastikan font kustom (Playfair Display, Great Vibes) sudah selesai
+  // dimuat SEBELUM di-capture - kalau belum, html2canvas akan merender
+  // pakai font pengganti bawaan sistem yang ukurannya beda, bikin teks
+  // meleset/terpotong dari posisi yang seharusnya.
+  const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
 
-  renderPromise.then((canvas) => {
+  fontsReady.then(() => {
+    return html2canvas(certificate, { scale: 2, backgroundColor: null });
+  }).then((canvas) => {
     const imageData = canvas.toDataURL("image/png");
     const { jsPDF } = window.jspdf;
     // Pakai ukuran halaman standar A4 (bukan dimensi pixel mentah kanvas) -
