@@ -589,9 +589,14 @@ function downloadCertificate() {
   const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
 
   fontsReady.then(() => {
-    return html2canvas(certificate, { scale: 2, backgroundColor: null });
+    return html2canvas(certificate, { scale: 1.5, backgroundColor: "#ffffff" });
   }).then((canvas) => {
-    const imageData = canvas.toDataURL("image/png");
+    // Pakai JPEG (bukan PNG) supaya ukuran datanya jauh lebih kecil.
+    // PDF sebelumnya pakai PNG hasil scale:2 yang bisa 2-4 MB setelah
+    // di-base64 - payload sebesar itu melewati jembatan JS<->native
+    // Capacitor dan sebagian datanya rusak/kepotong di beberapa HP,
+    // hasilnya gambar sertifikat tampil acak/rusak seperti noise.
+    const imageData = canvas.toDataURL("image/jpeg", 0.92);
     const { jsPDF } = window.jspdf;
     // Pakai ukuran halaman standar A4 (bukan dimensi pixel mentah kanvas) -
     // rasio sertifikat kita (1050x743) sudah dekat dengan rasio A4 landscape,
@@ -605,7 +610,7 @@ function downloadCertificate() {
     });
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
-    pdf.addImage(imageData, "PNG", 0, 0, pageWidth, pageHeight);
+    pdf.addImage(imageData, "JPEG", 0, 0, pageWidth, pageHeight);
 
     const studentName = getCertificateStudentName().replace(/[^a-z0-9]+/gi, "-");
     const fileName = `Sertifikat-Terala-${studentName}.pdf`;
