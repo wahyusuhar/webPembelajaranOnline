@@ -314,9 +314,7 @@ document.addEventListener("DOMContentLoaded", function () {
       html: `
         <div style="text-align: left; padding: 5px 0;">
           <label style="font-size: 0.85rem; font-weight: 600; color: #444;">Nama Lengkap:</label>
-          <input id="swal-google-name" class="swal2-input" placeholder="Contoh: Budi Pratama" style="width: 90%; margin: 6px auto 14px auto;" />
-          <label style="font-size: 0.85rem; font-weight: 600; color: #444;">Email Google (@gmail.com):</label>
-          <input id="swal-google-email" type="email" class="swal2-input" placeholder="contoh@gmail.com" style="width: 90%; margin: 6px auto;" />
+          <input id="swal-google-name" class="swal2-input" placeholder="Contoh: Budi Pratama" style="width: 90%; margin: 6px auto;" />
         </div>
       `,
       focusConfirm: false,
@@ -326,34 +324,28 @@ document.addEventListener("DOMContentLoaded", function () {
       cancelButtonText: "Kembali",
       preConfirm: () => {
         const nameInput = document.getElementById("swal-google-name");
-        const emailInput = document.getElementById("swal-google-email");
         const name = nameInput ? nameInput.value.trim() : "";
-        const email = emailInput ? emailInput.value.trim() : "";
 
-        if (!name || !email) {
-          Swal.showValidationMessage("Harap isi nama dan email Google!");
+        if (!name) {
+          Swal.showValidationMessage("Harap isi nama lengkap Anda!");
           return false;
         }
-        if (!email.includes("@")) {
-          Swal.showValidationMessage("Format email tidak valid!");
-          return false;
-        }
-        return { name, email };
+        return { name };
       }
     }).then((result) => {
       if (result.isConfirmed && result.value) {
-        finishGoogleLogin(result.value.name, result.value.email);
+        finishGoogleLogin(result.value.name);
       }
     });
   }
 
-  function finishGoogleLogin(name, email) {
+  function finishGoogleLogin(name) {
     // Daftarkan/update user ke localStorage jika belum ada
-    let existingUser = findUserByUsernameOrEmail(email);
+    let existingUser = findUserByUsernameOrEmail(name);
     if (!existingUser) {
       existingUser = {
         username: name,
-        email: email,
+        email: "",
         password: "google_authenticated",
         authProvider: "google",
         createdAt: new Date().toISOString()
@@ -364,7 +356,7 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("currentUser", JSON.stringify({
       username: name,
-      email: email,
+      email: "",
       loginType: "google",
       loginAt: new Date().toISOString()
     }));
@@ -372,7 +364,7 @@ document.addEventListener("DOMContentLoaded", function () {
     Swal.fire({
       icon: "success",
       title: "Login Google Berhasil!",
-      html: `Selamat datang, <b>${name}</b>!<br><span style="color: #666; font-size: 0.85rem;">(${email})</span>`,
+      html: `Selamat datang, <b>${name}</b>!`,
       confirmButtonText: "Lanjutkan ke Pembelajaran",
       confirmButtonColor: "#2ecc71",
       timer: 1800,
