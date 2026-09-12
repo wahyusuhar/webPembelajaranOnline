@@ -2128,9 +2128,9 @@ text-shadow: 5px 5px #558ABB;
 
 .certificate .cert-sign-img {
   display: block;
-  height: 60px;
-  max-width: 200px;
-  margin: 0 auto -10px;
+  height: 100px;
+  max-width: 260px;
+  margin: 0 auto -20px;
   object-fit: contain;
 }
 
@@ -2148,8 +2148,8 @@ text-shadow: 5px 5px #558ABB;
 
 .certificate .cert-date {
   position: absolute;
-  bottom: 30px;
-  right: 60px;
+  bottom: 70px;
+  right: 70px;
   margin: 0;
   font-size: 0.8rem;
   color: #a0a0a0;
