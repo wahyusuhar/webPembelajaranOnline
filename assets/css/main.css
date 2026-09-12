@@ -2051,7 +2051,10 @@ text-shadow: 5px 5px #558ABB;
 # Sertifikat Penghargaan (Latihan Soal Online)
 --------------------------------------------------------------*/
 .certificate {
-  position: fixed;
+  /* position:fixed diketahui punya dukungan terbatas di html2canvas
+     (perhitungan lebar konten anak bisa meleset) - pakai position:absolute
+     yang jauh lebih teruji untuk elemen target capture. */
+  position: absolute;
   top: -10000px;
   left: -10000px;
   width: 1050px;
@@ -2071,7 +2074,8 @@ text-shadow: 5px 5px #558ABB;
 
 .certificate .cert-content {
   position: relative;
-  height: 100%;
+  width: 1050px;
+  height: 743px;
   box-sizing: border-box;
   padding: 100px 110px 50px;
   text-align: center;
