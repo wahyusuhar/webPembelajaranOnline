@@ -644,10 +644,28 @@ function downloadCertificate() {
 async function saveCertificateNative(base64Data, fileName) {
   const { Filesystem, Share } = window.Capacitor.Plugins;
 
-  // "CACHE" adalah nilai mentah dari enum Directory.Cache milik
-  // @capacitor/filesystem. Enum itu sendiri hanya ada lewat import ES
-  // module dari paket npm-nya, yang tidak tersedia di halaman ini
-  // (tidak pakai bundler) - jadi dikirim langsung sebagai string.
+  // Nilai directory dikirim sebagai string mentah ("DOCUMENTS", "CACHE", dst)
+  // karena enum Directory dari @capacitor/filesystem hanya tersedia lewat
+  // import ES module, sedangkan halaman ini tidak pakai bundler.
+  try {
+    if (Filesystem.requestPermissions) {
+      await Filesystem.requestPermissions().catch(() => {});
+    }
+
+    await Filesystem.writeFile({
+      path: fileName,
+      data: base64Data,
+      directory: "DOCUMENTS",
+    });
+
+    alert("Sertifikat berhasil disimpan di folder Documents HP kamu: " + fileName);
+    return;
+  } catch (err) {
+    console.warn("Gagal simpan ke folder Documents, coba bagikan lewat Share:", err);
+  }
+
+  // Fallback: kalau simpan langsung ke folder Documents gagal (mis. izin
+  // ditolak), tetap tawarkan lewat Share sheet supaya siswa tetap dapat filenya.
   const written = await Filesystem.writeFile({
     path: fileName,
     data: base64Data,
