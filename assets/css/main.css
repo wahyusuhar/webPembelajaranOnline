@@ -2422,6 +2422,28 @@ text-shadow: 5px 5px #558ABB;
     font-size: 1.3rem;
   }
 
+  /* Navigasi Sebelumnya / Berikutnya */
+  .quiz-nav-btn {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .quiz-nav-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .quiz-nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
 /*--------------------------------------------------------------
 # Kartu Aktivitas Interaktif (Kuiz & LKPD Wordwall)
 --------------------------------------------------------------*/

@@ -399,14 +399,17 @@ const questions = [
 
 let currentQuestionIndex = 0;
 let correctCount = 0;
-let quizLocked = false;
+let userAnswers = questions.map(() => null);
+let autoAdvanceTimer = null;
 
 const PASSING_SCORE = 70;
 
 function loadQuestion() {
-  quizLocked = false;
   const quizDiv = document.getElementById("quiz");
   const question = questions[currentQuestionIndex];
+  const savedAnswer = userAnswers[currentQuestionIndex];
+  const isLastQuestion = currentQuestionIndex === questions.length - 1;
+
   quizDiv.innerHTML = `
     <p class="question-number mb-2"><i class="bi bi-flag-fill"></i> Soal ${currentQuestionIndex + 1} dari ${questions.length}</p>
     <p class="question-text mb-4">${question.question}?</p>
@@ -415,7 +418,7 @@ function loadQuestion() {
         .map(
           (option, index) => `
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="answer" id="option${index}" value="${index}">
+          <input class="form-check-input" type="radio" name="answer" id="option${index}" value="${index}" ${savedAnswer === index ? "checked" : ""}>
           <label class="form-check-label" for="option${index}">
             ${option}
           </label>
@@ -424,28 +427,42 @@ function loadQuestion() {
         )
         .join("")}
     </div>
+    <div class="quiz-nav mt-4 d-flex justify-content-between">
+      <button type="button" class="quiz-nav-btn" id="quiz-prev-btn" onclick="goToPreviousQuestion()" ${currentQuestionIndex === 0 ? "disabled" : ""}>&laquo; Soal Sebelumnya</button>
+      <button type="button" class="quiz-nav-btn" id="quiz-next-btn" onclick="goToNextQuestionManual()" ${savedAnswer === null ? "disabled" : ""}>${isLastQuestion ? "Selesai" : "Soal Berikutnya"} &raquo;</button>
+    </div>
   `;
 }
 
 
 function selectAnswer() {
-  if (quizLocked) return;
-
   const selectedOption = document.querySelector("input[name='answer']:checked");
   if (!selectedOption) return;
 
-  quizLocked = true;
-
   const selectedIndex = parseInt(selectedOption.value, 10);
-  const isCorrect = selectedIndex === questions[currentQuestionIndex].correct;
-  if (isCorrect) correctCount++;
+  const wasUnanswered = userAnswers[currentQuestionIndex] === null;
+  userAnswers[currentQuestionIndex] = selectedIndex;
 
-  document.querySelectorAll("input[name='answer']").forEach((input) => {
-    input.disabled = true;
-  });
+  const nextBtn = document.getElementById("quiz-next-btn");
+  if (nextBtn) nextBtn.disabled = false;
 
-  // Jawaban tidak ditampilkan benar/salah - langsung lanjut ke soal berikutnya
-  setTimeout(goToNextQuestion, 300);
+  if (wasUnanswered) {
+    // Jawaban tidak ditampilkan benar/salah - baru pertama kali dijawab
+    // langsung lanjut otomatis ke soal berikutnya
+    autoAdvanceTimer = setTimeout(() => {
+      autoAdvanceTimer = null;
+      goToNextQuestion();
+    }, 300);
+  }
+  // Kalau sedang meninjau ulang soal yang sudah pernah dijawab, cukup
+  // simpan perubahannya - biarkan siswa yang menekan tombol navigasi
+}
+
+function cancelAutoAdvance() {
+  if (autoAdvanceTimer) {
+    clearTimeout(autoAdvanceTimer);
+    autoAdvanceTimer = null;
+  }
 }
 
 function goToNextQuestion() {
@@ -457,6 +474,19 @@ function goToNextQuestion() {
   }
 }
 
+function goToNextQuestionManual() {
+  cancelAutoAdvance();
+  if (userAnswers[currentQuestionIndex] === null) return;
+  goToNextQuestion();
+}
+
+function goToPreviousQuestion() {
+  cancelAutoAdvance();
+  if (currentQuestionIndex === 0) return;
+  currentQuestionIndex--;
+  loadQuestion();
+}
+
 function getStarCount(score) {
   if (score < 50) return 1;
   if (score < 70) return 2;
@@ -466,6 +496,9 @@ function getStarCount(score) {
 
 function showFinalResult() {
   const total = questions.length;
+  correctCount = userAnswers.reduce((count, answer, index) => {
+    return answer === questions[index].correct ? count + 1 : count;
+  }, 0);
   const wrongCount = total - correctCount;
   const score = Math.round((correctCount / total) * 100);
   const passed = score >= PASSING_SCORE;
@@ -507,8 +540,10 @@ function showFinalResult() {
 }
 
 function restartQuiz() {
+  cancelAutoAdvance();
   currentQuestionIndex = 0;
   correctCount = 0;
+  userAnswers = questions.map(() => null);
   closePopup();
   loadQuestion();
 }
