@@ -2181,7 +2181,7 @@ text-shadow: 5px 5px #558ABB;
 }
 
   /* Nomor urut soal */
-  .question-number {
+  .quiz-container .question-number {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -2213,8 +2213,8 @@ text-shadow: 5px 5px #558ABB;
   }
 
   /* Gaya untuk teks soal */
-  .question-text {
-    color: #fabd07;
+  .quiz-container .question-text {
+    color: #ffffff;
     font-weight: bold;
     font-size: 1.3rem;
   }
