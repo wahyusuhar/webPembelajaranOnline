@@ -50,7 +50,7 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:wght@700;800&family=Great+Vibes&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -128,6 +128,12 @@
     <span> Kembali</span>
     <!-- <i class="bi bi-arrow-right"></i> -->
   </a>
+
+  <div class="cert-info-banner">
+    <i class="bi bi-award-fill"></i>
+    <span>Selesaikan semua soal dengan nilai sempurna <strong>100</strong> dan dapatkan <strong>Sertifikat Penghargaan</strong> yang bisa langsung diunduh dalam bentuk PDF!</span>
+  </div>
+
    <div class="container">
    
     <div class="quiz-container" style="position: relative; top: -40px;">
@@ -170,8 +176,32 @@
       </div>
     </div>
     <p class="finished-subtitle" id="finished-message"></p>
+    <button class="finished-ok-btn" id="finished-cert-btn" onclick="downloadCertificate()" style="display:none; background-color:#e8b923; color:#3d2c00;">🏅 Unduh Sertifikat (PDF)</button>
     <button class="finished-ok-btn" id="finished-ok-btn" onclick="closePopup()">Selesai</button>
     <button class="finished-ok-btn" id="finished-retry-btn" onclick="restartQuiz()" style="display:none; background-color:#e74c3c;">Ulangi Sekarang</button>
+  </div>
+
+  <!-- Template Sertifikat (dirender tersembunyi, dipakai untuk generate PDF) -->
+  <div id="certificate" class="certificate">
+    <div class="cert-diagonal cert-diagonal-tl"></div>
+    <div class="cert-diagonal cert-diagonal-br"></div>
+    <div class="cert-frame">
+      <div class="cert-inner">
+        <div class="cert-corner cert-corner-tr"></div>
+        <div class="cert-corner cert-corner-bl"></div>
+        <div class="cert-badge"></div>
+        <h1 class="cert-title">SERTIFIKAT</h1>
+        <h2 class="cert-subtitle">PARTISIPASI</h2>
+        <p class="cert-given-to">SERTIFIKAT INI DIBERIKAN KEPADA:</p>
+        <p class="cert-name" id="cert-name">Nama Siswa</p>
+        <p class="cert-desc">Atas keberhasilannya menyelesaikan Latihan Soal Online "Kenampakan Alam Sumatera Utara" di Terala dengan meraih nilai sempurna 100.</p>
+        <div class="cert-signature">
+          <div class="cert-sign-line"></div>
+          <p class="cert-sign-name">Tim Terala</p>
+        </div>
+        <p class="cert-date" id="cert-date"></p>
+      </div>
+    </div>
   </div>
 
  
@@ -231,6 +261,10 @@
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Sertifikat PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>

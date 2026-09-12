@@ -480,6 +480,14 @@ function showFinalResult() {
     star.classList.toggle("empty", index >= starCount);
   });
 
+  const certBtn = document.getElementById("finished-cert-btn");
+  if (score === 100) {
+    setupCertificate();
+    certBtn.style.display = "inline-block";
+  } else {
+    certBtn.style.display = "none";
+  }
+
   const messageEl = document.getElementById("finished-message");
   const okBtn = document.getElementById("finished-ok-btn");
   const retryBtn = document.getElementById("finished-retry-btn");
@@ -503,6 +511,56 @@ function restartQuiz() {
   correctCount = 0;
   closePopup();
   loadQuestion();
+}
+
+function getCertificateStudentName() {
+  try {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser") || "null");
+    if (currentUser && currentUser.username) return currentUser.username;
+  } catch (e) {
+    // biarkan fallback di bawah
+  }
+  return "Siswa Terala";
+}
+
+function setupCertificate() {
+  const today = new Date().toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  document.getElementById("cert-name").textContent = getCertificateStudentName();
+  document.getElementById("cert-date").textContent = today;
+}
+
+function downloadCertificate() {
+  const certBtn = document.getElementById("finished-cert-btn");
+  const originalLabel = certBtn.textContent;
+  certBtn.disabled = true;
+  certBtn.textContent = "Menyiapkan sertifikat...";
+
+  const certificate = document.getElementById("certificate");
+
+  html2canvas(certificate, { scale: 2, backgroundColor: null }).then((canvas) => {
+    const imageData = canvas.toDataURL("image/png");
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({
+      orientation: "landscape",
+      unit: "px",
+      format: [canvas.width, canvas.height],
+    });
+    pdf.addImage(imageData, "PNG", 0, 0, canvas.width, canvas.height);
+
+    const studentName = getCertificateStudentName().replace(/[^a-z0-9]+/gi, "-");
+    pdf.save(`Sertifikat-Terala-${studentName}.pdf`);
+
+    certBtn.disabled = false;
+    certBtn.textContent = originalLabel;
+  }).catch((err) => {
+    console.error("Gagal membuat sertifikat:", err);
+    certBtn.disabled = false;
+    certBtn.textContent = originalLabel;
+  });
 }
 
 
