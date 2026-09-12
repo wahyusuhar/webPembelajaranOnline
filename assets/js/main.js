@@ -596,12 +596,19 @@ function downloadCertificate() {
   renderPromise.then((canvas) => {
     const imageData = canvas.toDataURL("image/png");
     const { jsPDF } = window.jspdf;
+    // Pakai ukuran halaman standar A4 (bukan dimensi pixel mentah kanvas) -
+    // rasio sertifikat kita (1050x743) sudah dekat dengan rasio A4 landscape,
+    // dan ukuran halaman standar ini dikenali dengan baik oleh semua
+    // pembaca PDF (sebelumnya pakai ukuran custom raksasa yang bikin
+    // sebagian viewer, mis. Google Photos, menampilkannya ter-zoom/terpotong).
     const pdf = new jsPDF({
       orientation: "landscape",
-      unit: "px",
-      format: [canvas.width, canvas.height],
+      unit: "mm",
+      format: "a4",
     });
-    pdf.addImage(imageData, "PNG", 0, 0, canvas.width, canvas.height);
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    pdf.addImage(imageData, "PNG", 0, 0, pageWidth, pageHeight);
 
     const studentName = getCertificateStudentName().replace(/[^a-z0-9]+/gi, "-");
     const fileName = `Sertifikat-Terala-${studentName}.pdf`;
