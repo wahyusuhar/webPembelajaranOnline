@@ -130,7 +130,7 @@
       <span>Selesaikan semua soal dengan nilai sempurna <strong>100</strong> dan dapatkan <strong>Sertifikat Penghargaan</strong> yang bisa langsung diunduh dalam bentuk PDF!</span>
     </div>
 
-    <div id="dev-tools" style="display:none; text-align:center; margin-bottom:12px;">
+    <div id="dev-tools" style="text-align:center; margin-bottom:12px;">
       <button type="button" onclick="devJumpToFinished(100)" style="background:#222; color:#7CFC00; border:1px dashed #7CFC00; padding:6px 14px; border-radius:6px; font-size:0.8rem; cursor:pointer;">🧪 Dev: Lompat ke Nilai 100</button>
     </div>
 
@@ -184,24 +184,7 @@
     <button class="finished-ok-btn" id="finished-retry-btn" onclick="restartQuiz()" style="display:none; background-color:#e74c3c;">Ulangi Sekarang</button>
   </div>
 
-  <!-- Template Sertifikat (dirender tersembunyi, dipakai untuk generate PDF) -->
-  <div id="certificate" class="certificate">
-    <div class="cert-content">
-      <h1 class="cert-title">SERTIFIKAT</h1>
-      <h2 class="cert-subtitle">PARTISIPASI</h2>
-      <p class="cert-given-to">SERTIFIKAT INI DIBERIKAN KEPADA:</p>
-      <p class="cert-name" id="cert-name">Nama Siswa</p>
-      <p class="cert-desc">Atas keberhasilannya menyelesaikan Latihan Soal Online di Terala dengan meraih nilai sempurna 100.</p>
-      <div class="cert-signature">
-        <img src="assets/ttd/TTD.png" alt="Tanda tangan Terala" class="cert-sign-img" onerror="this.style.display='none'; this.nextElementSibling.style.marginTop='0';">
-        <div class="cert-sign-line"></div>
-        <p class="cert-sign-name">Tim Terala</p>
-      </div>
-    </div>
-    <p class="cert-date" id="cert-date"></p>
-  </div>
 
- 
 
   <!-- end -->
   
@@ -260,7 +243,6 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Sertifikat PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <!-- Main JS File -->

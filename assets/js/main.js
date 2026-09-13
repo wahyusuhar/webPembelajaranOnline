@@ -514,12 +514,7 @@ function showFinalResult() {
   });
 
   const certBtn = document.getElementById("finished-cert-btn");
-  if (score === 100) {
-    setupCertificate();
-    certBtn.style.display = "inline-block";
-  } else {
-    certBtn.style.display = "none";
-  }
+  certBtn.style.display = score === 100 ? "inline-block" : "none";
 
   const messageEl = document.getElementById("finished-message");
   const okBtn = document.getElementById("finished-ok-btn");
@@ -558,51 +553,136 @@ function getCertificateStudentName() {
   return "Siswa Terala";
 }
 
-function setupCertificate() {
-  const today = new Date().toLocaleDateString("id-ID", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+function loadImageElement(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error("Gagal memuat gambar: " + src));
+    img.src = src;
   });
-  document.getElementById("cert-name").textContent = getCertificateStudentName();
-  document.getElementById("cert-date").textContent = today;
+}
+
+function wrapCanvasText(ctx, text, maxWidth) {
+  const words = text.split(" ");
+  const lines = [];
+  let currentLine = words[0] || "";
+  for (let i = 1; i < words.length; i++) {
+    const testLine = currentLine + " " + words[i];
+    if (ctx.measureText(testLine).width > maxWidth && currentLine) {
+      lines.push(currentLine);
+      currentLine = words[i];
+    } else {
+      currentLine = testLine;
+    }
+  }
+  if (currentLine) lines.push(currentLine);
+  return lines;
+}
+
+// Sertifikat digambar langsung dengan Canvas 2D API (bukan "screenshot" HTML
+// lewat html2canvas). Setelah berkali-kali html2canvas gagal konsisten di
+// berbagai HP (warna ketiban color-mix(), clip-path tidak akurat, posisi
+// fixed/absolute meleset, sebagian teks tidak ter-render), pakai Canvas API
+// asli jauh lebih andal karena didukung penuh & konsisten di semua browser.
+async function generateCertificateDataUrl() {
+  const templateImg = await loadImageElement("assets/Template%20Sertifikat/template.png");
+
+  const canvas = document.createElement("canvas");
+  canvas.width = templateImg.naturalWidth || 2000;
+  canvas.height = templateImg.naturalHeight || 1414;
+  const ctx = canvas.getContext("2d");
+
+  ctx.drawImage(templateImg, 0, 0, canvas.width, canvas.height);
+
+  const centerX = canvas.width / 2;
+
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#16225a";
+  ctx.font = "800 92px 'Playfair Display', serif";
+  ctx.fillText("SERTIFIKAT", centerX, 260);
+
+  ctx.font = "700 38px 'Playfair Display', serif";
+  ctx.fillText("PARTISIPASI", centerX, 320);
+
+  ctx.fillStyle = "#a9781f";
+  ctx.font = "700 28px Poppins, sans-serif";
+  ctx.fillText("SERTIFIKAT INI DIBERIKAN KEPADA:", centerX, 410);
+
+  ctx.fillStyle = "#16225a";
+  ctx.font = "90px 'Great Vibes', cursive";
+  ctx.fillText(getCertificateStudentName(), centerX, 510);
+
+  ctx.strokeStyle = "#d8cba0";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(centerX - 250, 535);
+  ctx.lineTo(centerX + 250, 535);
+  ctx.stroke();
+
+  ctx.fillStyle = "#7a7a7a";
+  ctx.font = "28px Poppins, sans-serif";
+  const descLines = wrapCanvasText(
+    ctx,
+    'Atas keberhasilannya menyelesaikan Latihan Soal Online di Terala dengan meraih nilai sempurna 100.',
+    1300
+  );
+  descLines.forEach((line, i) => {
+    ctx.fillText(line, centerX, 600 + i * 38);
+  });
+
+  let signatureBottomY = 600 + descLines.length * 38 + 60;
+  try {
+    const signatureImg = await loadImageElement("assets/ttd/TTD.png");
+    const sigWidth = 300;
+    const sigHeight = (signatureImg.naturalHeight / signatureImg.naturalWidth) * sigWidth;
+    ctx.drawImage(signatureImg, centerX - sigWidth / 2, signatureBottomY, sigWidth, sigHeight);
+    signatureBottomY += sigHeight;
+  } catch (err) {
+    console.warn("Tanda tangan tidak ditemukan, lewati:", err);
+  }
+
+  signatureBottomY += 20;
+  ctx.strokeStyle = "#333333";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(centerX - 150, signatureBottomY);
+  ctx.lineTo(centerX + 150, signatureBottomY);
+  ctx.stroke();
+
+  ctx.fillStyle = "#16225a";
+  ctx.font = "700 32px Poppins, sans-serif";
+  ctx.fillText("Tim Terala", centerX, signatureBottomY + 40);
+
+  const today = new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+  ctx.fillStyle = "#a0a0a0";
+  ctx.font = "24px Poppins, sans-serif";
+  ctx.textAlign = "right";
+  ctx.fillText(today, canvas.width - 130, canvas.height - 60);
+
+  return canvas.toDataURL("image/jpeg", 0.92);
 }
 
 function downloadCertificate() {
   const certBtn = document.getElementById("finished-cert-btn");
   const originalLabel = certBtn.textContent;
 
-  if (typeof html2canvas === "undefined" || !window.jspdf) {
-    alert("Gagal memuat komponen pembuat sertifikat. Periksa koneksi internet, atau coba nonaktifkan pemblokir skrip/ekstensi privasi (mis. Brave Shields) khusus untuk halaman ini, lalu coba lagi.");
+  if (!window.jspdf) {
+    alert("Gagal memuat komponen pembuat sertifikat (jsPDF). Periksa koneksi internet, lalu coba lagi.");
     return;
   }
 
   certBtn.disabled = true;
   certBtn.textContent = "Menyiapkan sertifikat...";
 
-  const certificate = document.getElementById("certificate");
-
   // Pastikan font kustom (Playfair Display, Great Vibes) sudah selesai
-  // dimuat SEBELUM di-capture - kalau belum, html2canvas akan merender
-  // pakai font pengganti bawaan sistem yang ukurannya beda, bikin teks
-  // meleset/terpotong dari posisi yang seharusnya.
+  // dimuat SEBELUM digambar ke canvas - kalau belum, teks bisa memakai
+  // font pengganti bawaan sistem yang ukurannya beda.
   const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
 
-  fontsReady.then(() => {
-    return html2canvas(certificate, { scale: 1.5, backgroundColor: "#ffffff" });
-  }).then((canvas) => {
-    // Pakai JPEG (bukan PNG) supaya ukuran datanya jauh lebih kecil.
-    // PDF sebelumnya pakai PNG hasil scale:2 yang bisa 2-4 MB setelah
-    // di-base64 - payload sebesar itu melewati jembatan JS<->native
-    // Capacitor dan sebagian datanya rusak/kepotong di beberapa HP,
-    // hasilnya gambar sertifikat tampil acak/rusak seperti noise.
-    const imageData = canvas.toDataURL("image/jpeg", 0.92);
+  fontsReady.then(() => generateCertificateDataUrl()).then((imageData) => {
     const { jsPDF } = window.jspdf;
-    // Pakai ukuran halaman standar A4 (bukan dimensi pixel mentah kanvas) -
-    // rasio sertifikat kita (1050x743) sudah dekat dengan rasio A4 landscape,
-    // dan ukuran halaman standar ini dikenali dengan baik oleh semua
-    // pembaca PDF (sebelumnya pakai ukuran custom raksasa yang bikin
-    // sebagian viewer, mis. Google Photos, menampilkannya ter-zoom/terpotong).
+    // Ukuran halaman standar A4 - rasio template sertifikat kita (2000x1414)
+    // sudah persis rasio A4 landscape, jadi dikenali baik oleh semua pembaca PDF.
     const pdf = new jsPDF({
       orientation: "landscape",
       unit: "mm",
